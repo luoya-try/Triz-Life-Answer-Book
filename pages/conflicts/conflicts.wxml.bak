@@ -1,0 +1,260 @@
+<view class="container {{themeClass}}">
+  <view class="header">
+    <view class="header-left">
+      <text class="title">矛盾提取</text>
+      <text class="subtitle" wx:if="{{apiStatus}}">{{apiStatus}}</text>
+    </view>
+    <view class="header-right">
+      <button class="save-btn" bindtap="saveConflicts">保存</button>
+      <button class="next-btn" bindtap="nextStep">下一步</button>
+    </view>
+  </view>
+  
+  <view class="content">
+    <view class="instructions">
+      <text class="inst-title">📋 操作提示</text>
+      <text class="inst-content">• 点击相邻格子中间的按钮查看矛盾详情</text>
+      <text class="inst-content">• 颜色和形状表示矛盾的核心程度</text>
+      <text class="inst-content">• 点击保存按钮可保存矛盾数据供下次导入</text>
+    </view>
+    
+    <view class="grid-wrapper">
+      <view class="grid-container">
+        <!-- 过去行 -->
+        <view class="grid-row past-row">
+          <view class="grid-cell past-super">
+            <text class="cell-title">过去的超系统</text>
+            <text class="cell-content">{{gridData.past.super}}</text>
+          </view>
+          <view 
+            class="conflict-btn horizontal {{conflicts[0].levelClass}}" 
+            bindtap="showConflict" 
+            data-id="{{conflicts[0].id}}"
+            style="background-color: {{conflicts[0].bgColor}}"
+          >
+            <text class="btn-number">1</text>
+            <view class="btn-indicator {{conflicts[0].shapeClass}}"></view>
+          </view>
+          <view class="grid-cell past-system">
+            <text class="cell-title">过去的系统</text>
+            <text class="cell-content">{{gridData.past.system}}</text>
+          </view>
+          <view 
+            class="conflict-btn horizontal {{conflicts[1].levelClass}}" 
+            bindtap="showConflict" 
+            data-id="{{conflicts[1].id}}"
+            style="background-color: {{conflicts[1].bgColor}}"
+          >
+            <text class="btn-number">2</text>
+            <view class="btn-indicator {{conflicts[1].shapeClass}}"></view>
+          </view>
+          <view class="grid-cell past-sub">
+            <text class="cell-title">过去的子系统</text>
+            <text class="cell-content">{{gridData.past.sub}}</text>
+          </view>
+        </view>
+        
+        <!-- 垂直矛盾按钮：过去行到当前行 -->
+        <view class="vertical-buttons-row">
+          <view 
+            class="conflict-btn vertical {{getConflictLevelClass(7)}}" 
+            bindtap="showConflict" 
+            data-id="7"
+            style="background-color: {{getConflictColor(7)}}"
+          >
+            <text class="btn-number">7</text>
+            <view class="btn-indicator {{getConflictShape(7)}}"></view>
+          </view>
+          <view 
+            class="conflict-btn vertical {{getConflictLevelClass(9)}}" 
+            bindtap="showConflict" 
+            data-id="9"
+            style="background-color: {{getConflictColor(9)}}"
+          >
+            <text class="btn-number">9</text>
+            <view class="btn-indicator {{getConflictShape(9)}}"></view>
+          </view>
+          <view 
+            class="conflict-btn vertical {{getConflictLevelClass(11)}}" 
+            bindtap="showConflict" 
+            data-id="11"
+            style="background-color: {{getConflictColor(11)}}"
+          >
+            <text class="btn-number">11</text>
+            <view class="btn-indicator {{getConflictShape(11)}}"></view>
+          </view>
+        </view>
+        
+        <!-- 当前行 -->
+        <view class="grid-row current-row">
+          <view class="grid-cell current-super">
+            <text class="cell-title">当前的超系统</text>
+            <text class="cell-content">{{gridData.current.super}}</text>
+          </view>
+          <view 
+            class="conflict-btn horizontal {{getConflictLevelClass(3)}}" 
+            bindtap="showConflict" 
+            data-id="3"
+            style="background-color: {{getConflictColor(3)}}"
+          >
+            <text class="btn-number">3</text>
+            <view class="btn-indicator {{getConflictShape(3)}}"></view>
+          </view>
+          <view class="grid-cell center">
+            <text class="cell-title">核心问题</text>
+            <text class="cell-content">{{gridData.center}}</text>
+          </view>
+          <view 
+            class="conflict-btn horizontal {{getConflictLevelClass(4)}}" 
+            bindtap="showConflict" 
+            data-id="4"
+            style="background-color: {{getConflictColor(4)}}"
+          >
+            <text class="btn-number">4</text>
+            <view class="btn-indicator {{getConflictShape(4)}}"></view>
+          </view>
+          <view class="grid-cell current-sub">
+            <text class="cell-title">当前的子系统</text>
+            <text class="cell-content">{{gridData.current.sub}}</text>
+          </view>
+        </view>
+        
+        <!-- 垂直矛盾按钮：当前行到未来行 -->
+        <view class="vertical-buttons-row">
+          <view 
+            class="conflict-btn vertical {{getConflictLevelClass(8)}}" 
+            bindtap="showConflict" 
+            data-id="8"
+            style="background-color: {{getConflictColor(8)}}"
+          >
+            <text class="btn-number">8</text>
+            <view class="btn-indicator {{getConflictShape(8)}}"></view>
+          </view>
+          <view 
+            class="conflict-btn vertical {{getConflictLevelClass(10)}}" 
+            bindtap="showConflict" 
+            data-id="10"
+            style="background-color: {{getConflictColor(10)}}"
+          >
+            <text class="btn-number">10</text>
+            <view class="btn-indicator {{getConflictShape(10)}}"></view>
+          </view>
+          <view 
+            class="conflict-btn vertical {{getConflictLevelClass(12)}}" 
+            bindtap="showConflict" 
+            data-id="12"
+            style="background-color: {{getConflictColor(12)}}"
+          >
+            <text class="btn-number">12</text>
+            <view class="btn-indicator {{getConflictShape(12)}}"></view>
+          </view>
+        </view>
+        
+        <!-- 未来行 -->
+        <view class="grid-row future-row">
+          <view class="grid-cell future-super">
+            <text class="cell-title">未来的超系统</text>
+            <text class="cell-content">{{gridData.future.super}}</text>
+          </view>
+          <view 
+            class="conflict-btn horizontal {{getConflictLevelClass(5)}}" 
+            bindtap="showConflict" 
+            data-id="5"
+            style="background-color: {{getConflictColor(5)}}"
+          >
+            <text class="btn-number">5</text>
+            <view class="btn-indicator {{getConflictShape(5)}}"></view>
+          </view>
+          <view class="grid-cell future-system">
+            <text class="cell-title">未来的系统</text>
+            <text class="cell-content">{{gridData.future.system}}</text>
+          </view>
+          <view 
+            class="conflict-btn horizontal {{getConflictLevelClass(6)}}" 
+            bindtap="showConflict" 
+            data-id="6"
+            style="background-color: {{getConflictColor(6)}}"
+          >
+            <text class="btn-number">6</text>
+            <view class="btn-indicator {{getConflictShape(6)}}"></view>
+          </view>
+          <view class="grid-cell future-sub">
+            <text class="cell-title">未来的子系统</text>
+            <text class="cell-content">{{gridData.future.sub}}</text>
+          </view>
+        </view>
+        
+        <!-- 对角线矛盾按钮 -->
+        <view class="diagonal-buttons">
+          <view 
+            class="conflict-btn diagonal top-left {{getConflictLevelClass(13)}}" 
+            bindtap="showConflict" 
+            data-id="13"
+            style="background-color: {{getConflictColor(13)}}"
+          >
+            <text class="btn-number">13</text>
+            <view class="btn-indicator {{getConflictShape(13)}}"></view>
+          </view>
+          <view 
+            class="conflict-btn diagonal top-right {{getConflictLevelClass(14)}}" 
+            bindtap="showConflict" 
+            data-id="14"
+            style="background-color: {{getConflictColor(14)}}"
+          >
+            <text class="btn-number">14</text>
+            <view class="btn-indicator {{getConflictShape(14)}}"></view>
+          </view>
+          <view 
+            class="conflict-btn diagonal bottom-left {{getConflictLevelClass(15)}}" 
+            bindtap="showConflict" 
+            data-id="15"
+            style="background-color: {{getConflictColor(15)}}"
+          >
+            <text class="btn-number">15</text>
+            <view class="btn-indicator {{getConflictShape(15)}}"></view>
+          </view>
+          <view 
+            class="conflict-btn diagonal bottom-right {{getConflictLevelClass(16)}}" 
+            bindtap="showConflict" 
+            data-id="16"
+            style="background-color: {{getConflictColor(16)}}"
+          >
+            <text class="btn-number">16</text>
+            <view class="btn-indicator {{getConflictShape(16)}}"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 矛盾详情弹窗 -->
+  <view class="modal" wx:if="{{showModal}}" bindtap="hideModal">
+    <view class="modal-mask"></view>
+    <view class="modal-content" catchtap="">
+      <view class="modal-header">
+        <view class="conflict-badge">⚡ 矛盾 {{currentConflict ? currentConflict.id : ''}}</view>
+        <view class="modal-close" bindtap="hideModal">✕</view>
+      </view>
+      <view class="modal-body">
+        <view class="modal-title-row">
+          <text class="modal-cell-name">{{currentConflict.cell1Name}}</text>
+          <text class="modal-vs">VS</text>
+          <text class="modal-cell-name">{{currentConflict.cell2Name}}</text>
+        </view>
+
+        <text class="modal-conflict-title">{{currentConflict.title || '未命名矛盾'}}</text>
+
+        <text class="modal-description">{{currentConflict.description}}</text>
+        
+        <view class="core-level-badge">
+          <text class="level-label">核心程度</text>
+          <view class="level-stars">
+            <text wx:for="{{[1,2,3,4,5]}}" 
+                  wx:key="*this" 
+                  class="star {{item <= currentConflict.coreLevel ? 'filled' : ''}}">★</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

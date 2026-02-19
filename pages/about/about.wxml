@@ -1,0 +1,62 @@
+<!--pages/about/about.wxml-->
+<view class="container {{themeClass}}">
+  <!-- 页面标题 -->
+  <view class="header">
+    <text class="title">关于 TRIZ答案之书</text>
+    <text class="version">v1.0.0</text>
+  </view>
+
+  <!-- 功能列表导航 -->
+  <view class="nav-list">
+    <view class="nav-item" bindtap="showPrivacyPolicy">
+      <text class="nav-icon">🔒</text>
+      <text class="nav-text">隐私政策</text>
+      <text class="nav-arrow">›</text>
+    </view>
+    <view class="nav-item" bindtap="showUserAgreement">
+      <text class="nav-icon">📄</text>
+      <text class="nav-text">用户协议</text>
+      <text class="nav-arrow">›</text>
+    </view>
+    <view class="nav-item" bindtap="showAboutUs">
+      <text class="nav-icon">ℹ️</text>
+      <text class="nav-text">关于我们</text>
+      <text class="nav-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 联系我们 -->
+  <view class="contact-section">
+    <view class="section-title">联系我们</view>
+    <view class="contact-item">
+      <text class="contact-label">反馈建议</text>
+      <text class="contact-value">通过微信开发者工具提交Issue</text>
+    </view>
+    <view class="contact-item">
+      <text class="contact-label">版本信息</text>
+      <text class="contact-value">v1.0.0 | 微信基础库 2.19.4</text>
+    </view>
+  </view>
+
+  <!-- 底部版权 -->
+  <view class="footer">
+    <text class="copyright">© 2026 TRIZ答案之书</text>
+    <text class="desc">基于TRIZ创新方法论的问题分析工具</text>
+  </view>
+
+  <!-- 弹窗：隐私政策 -->
+  <view class="modal" wx:if="{{showModal}}" bindtap="hideModal">
+    <view class="modal-content" catchtap="true">
+      <view class="modal-header">
+        <text class="modal-title">{{modalTitle}}</text>
+        <view class="modal-close" bindtap="hideModal">×</view>
+      </view>
+      <scroll-view class="modal-body" scroll-y="true">
+        <text class="modal-text">{{modalContent}}</text>
+      </scroll-view>
+      <view class="modal-footer">
+        <button class="modal-btn" bindtap="hideModal">关闭</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,661 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30rpx 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(102, 126, 234, 0.3);
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 20rpx;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.next-btn {
+  height: 65rpx;
+  padding: 0 35rpx;
+  background: linear-gradient(135deg, #51cf66 0%, #37b24d 100%);
+  color: white;
+  font-size: 24rpx;
+  font-weight: bold;
+  border-radius: 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(55, 178, 77, 0.4);
+}
+
+.next-btn::after {
+  border: none;
+}
+
+.save-btn {
+  height: 65rpx;
+  padding: 0 35rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 24rpx;
+  font-weight: bold;
+  border-radius: 32rpx;
+  margin-right: 15rpx;
+}
+
+.save-btn::after {
+  border: none;
+}
+
+.next-btn:active {
+  transform: scale(0.98);
+}
+
+.content {
+  flex: 1;
+  padding: 25rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 25rpx;
+}
+
+.instructions {
+  background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%);
+  border-radius: 20rpx;
+  padding: 25rpx 30rpx;
+  border: 1rpx solid #a5d8ff;
+}
+
+.inst-title {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #1971c2;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.inst-content {
+  font-size: 20rpx;
+  color: #1864ab;
+  line-height: 1.6;
+  display: block;
+  margin-bottom: 6rpx;
+  padding-left: 16rpx;
+}
+
+.inst-content:last-child {
+  margin-bottom: 0;
+}
+
+.grid-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.grid-container {
+  background-color: white;
+  border-radius: 24rpx;
+  padding: 20rpx;
+  box-shadow: 0 6rpx 30rpx rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.grid-row {
+  display: flex;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+  align-items: stretch;
+}
+
+.grid-row:last-child {
+  margin-bottom: 0;
+}
+
+.grid-cell {
+  flex: 1;
+  padding: 20rpx;
+  border-radius: 14rpx;
+  position: relative;
+  min-height: 100rpx;
+}
+
+/* 历史层（过去） */
+.past-row .grid-cell {
+  background: linear-gradient(135deg, #ffe8cc 0%, #ffd8a8 100%);
+  border: 1rpx solid #ffc078;
+}
+
+/* 当前层 */
+.current-row .grid-cell {
+  background: linear-gradient(135deg, #d3adf7 0%, #c77dff 100%);
+  border: 1rpx solid #9c36b5;
+}
+
+/* 未来层 */
+.future-row .grid-cell {
+  background: linear-gradient(135deg, #99e9f2 0%, #66d9e8 100%);
+  border: 1rpx solid #15aabf;
+}
+
+/* 中心格子 */
+.center {
+  background: linear-gradient(135deg, #ff6b6b 0%, #fa5252 100%);
+  border: 1rpx solid #e03131;
+  position: relative;
+}
+
+.cell-title {
+  font-size: 18rpx;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.cell-content {
+  font-size: 16rpx;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 矛盾按钮样式 */
+.conflict-btn {
+  width: 55rpx;
+  height: 55rpx;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.conflict-btn:active {
+  transform: scale(0.9);
+}
+
+.conflict-btn.horizontal {
+  align-self: center;
+}
+
+.conflict-btn.vertical {
+  align-self: center;
+  width: 55rpx;
+  height: 55rpx;
+}
+
+.vertical-buttons-row {
+  display: flex;
+  gap: 0;
+  margin-bottom: 12rpx;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.vertical-btn-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-btn-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.conflict-btn.vertical {
+  z-index: 10;
+}
+
+
+/* 不同核心程度的按钮样式 */
+.conflict-btn.high {
+  box-shadow: 0 4rpx 16rpx rgba(220, 38, 38, 0.5);
+}
+
+.conflict-btn.medium {
+  box-shadow: 0 4rpx 12rpx rgba(245, 158, 11, 0.4);
+}
+
+.conflict-btn.low {
+  box-shadow: 0 4rpx 10rpx rgba(16, 185, 129, 0.3);
+}
+
+.btn-number {
+  font-size: 20rpx;
+  font-weight: bold;
+  color: white;
+  z-index: 1;
+}
+
+.btn-indicator {
+  position: absolute;
+  width: 16rpx;
+  height: 16rpx;
+  opacity: 0.3;
+}
+
+/* AI分析加载动画星星 */
+.ai-loading-spinner {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  font-size: 24rpx;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 旋转状态 - 以自身中心为轴 */
+.ai-loading-spinner.rotating {
+  animation: spin 1.5s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-indicator.circle {
+  border-radius: 50%;
+  background-color: white;
+}
+
+.btn-indicator.triangle {
+  width: 0;
+  height: 0;
+  border-left: 8rpx solid transparent;
+  border-right: 8rpx solid transparent;
+  border-bottom: 14rpx solid white;
+}
+
+.btn-indicator.square {
+  border-radius: 3rpx;
+  background-color: white;
+}
+
+/* 空格子样式 */
+.grid-cell.empty {
+  opacity: 0.4;
+  background-color: #e9ecef !important;
+  border: 1rpx dashed #dee2e6;
+  pointer-events: none;
+}
+
+.grid-cell.empty .cell-content::before {
+  content: '（未填写）';
+  color: #adb5bd;
+  font-style: italic;
+}
+
+/* 禁用的按钮样式 */
+.conflict-btn.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  border: 2rpx dashed #dee2e6;
+}
+
+.conflict-btn.disabled .btn-number {
+  color: #adb5bd;
+}
+
+/* 对角线矛盾按钮容器 */
+.diagonal-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.conflict-btn.diagonal {
+  position: absolute;
+  pointer-events: auto;
+  border-radius: 50%;
+}
+
+/* 按钮13: 过去的超系统(左上) -> 核心问题(中心) */
+.top-left {
+  top: 30%;
+  left: 30%;
+}
+
+/* 按钮14: 核心问题(5) -> 未来的子系统(9) - 右下角区域 */
+.top-right {
+  bottom: 30%;
+  right: 30%;
+}
+
+/* 按钮15: 过去的子系统(3) -> 核心问题(5) - 左下角区域 */
+.bottom-left {
+  bottom: 30%;
+  left: 30%;
+}
+
+
+/* 按钮16: 核心问题(中心) -> 未来的超系统(右上) */
+.bottom-right {
+  top: 30%;
+  right: 30%;
+}
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10rpx);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 24rpx;
+  width: 85%;
+  max-width: 600rpx;
+  box-shadow: 0 12rpx 40rpx rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.conflict-badge {
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+  color: white;
+}
+
+.modal-close {
+  width: 50rpx;
+  height: 50rpx;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: white;
+}
+
+.modal-body {
+  padding: 35rpx;
+}
+
+.modal-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20rpx;
+  margin-bottom: 25rpx;
+}
+
+.ai-analyzing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%);
+  border-radius: 20rpx;
+}
+
+.spinner {
+  font-size: 48rpx;
+  animation: spin 1.5s linear infinite;
+  margin-bottom: 15rpx;
+}
+
+.analyzing-text {
+  font-size: 24rpx;
+  color: #1971c2;
+  font-weight: 600;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ai-badge {
+  background: linear-gradient(135deg, #51cf66 0%, #37b24d 100%);
+  color: white;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(51, 207, 102, 0.3);
+}
+
+.modal-cell-name {
+  flex: 1;
+  font-size: 22rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+  padding: 10rpx;
+  background-color: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.modal-vs {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #764ba2;
+  padding: 0 10rpx;
+}
+
+.modal-description {
+  font-size: 26rpx;
+  color: #2c3e50;
+  line-height: 1.7;
+  display: block;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.core-level-badge {
+  background: linear-gradient(135deg, #ffe8cc 0%, #ffd8a8 100%);
+  padding: 20rpx;
+  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.level-label {
+  font-size: 20rpx;
+  font-weight: bold;
+  color: #e67700;
+}
+
+.level-stars {
+  display: flex;
+  gap: 6rpx;
+}
+
+.star {
+  font-size: 32rpx;
+  color: #dee2e6;
+}
+
+.star.filled {
+  color: #fab005;
+}
+
+/* ==================== 多巴胺风样式 ==================== */
+
+.dopamine-theme {
+  background: #FFF9E6 !important;
+}
+
+.dopamine-theme .header {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 50%, #FF9AA2 100%) !important;
+  animation: gradientShift 8s ease infinite !important;
+  background-size: 200% 200% !important;
+}
+
+.dopamine-theme .title {
+  color: #2D1B4E !important;
+  font-weight: 900 !important;
+}
+
+.dopamine-theme .subtitle {
+  color: #FF9AA2 !important;
+  font-weight: 600 !important;
+}
+
+.dopamine-theme .conflict-card {
+  background: #FFF !important;
+  border: 3rpx dashed #FF6B9D !important;
+  border-radius: 30rpx !important;
+  box-shadow: 8rpx 8rpx 0px rgba(102, 126, 234, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+
+.dopamine-theme .conflict-card:active {
+  transform: scale(0.98) rotate(-1deg) !important;
+}
+
+.dopamine-theme .conflict-icon {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  box-shadow: 0 4rpx 15rpx rgba(255, 107, 157, 0.4) !important;
+}
+
+.dopamine-theme .conflict-title {
+  color: #2D1B4E !important;
+  font-weight: 700 !important;
+}
+
+.dopamine-theme .save-btn,
+.dopamine-theme .next-btn {
+  border-radius: 30rpx !important;
+  font-weight: 700 !important;
+  border: 2rpx solid transparent !important;
+}
+
+.dopamine-theme .save-btn {
+  background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%) !important;
+  box-shadow: 0 4rpx 15rpx rgba(77, 150, 255, 0.4) !important;
+}
+
+.dopamine-theme .next-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  box-shadow: 0 4rpx 15rpx rgba(255, 107, 157, 0.4) !important;
+  animation: pulse 2s ease-in-out infinite !important;
+}
+
+.dopamine-theme .star.filled {
+  color: #FFD93D !important;
+  animation: twinkle 1s ease-in-out infinite !important;
+}
+
+/* 动画 */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+/* 矛盾标题样式 */
+.modal-conflict-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #c92a2b;
+  line-height: 1.4;
+  display: block;
+  margin-bottom: 20rpx;
+  text-align: center;
+  padding: 15rpx;
+  background: linear-gradient(135deg, #ffe8cc 0%, #fff4e6 100%);
+  border-radius: 12rpx;
+  border-left: 4rpx solid #fd7e14;
+}
+
+.modal-conflict-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #495057;
+  line-height: 1.5;
+}
+
+/* 多巴胺主题 - 矛盾标题 */
+.dopamine-theme .modal-conflict-title {
+  background: linear-gradient(135deg, #FFB5C5 0%, #FFD93D 100%) !important;
+  border-left: 4rpx solid #FF6B9D !important;
+  color: #2D1B4E !important;
+  animation: pulse 2s ease-in-out infinite !important;
+}

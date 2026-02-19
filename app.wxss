@@ -1,0 +1,229 @@
+/* 全局样式 */
+
+page {
+  background-color: var(--bg-color, #f5f5f5);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* ==================== 主题CSS变量 ==================== */
+
+/* 专业版（冷色调） */
+.theme-professional {
+  --primary-color: #2c3e50;
+  --primary-light: #34495e;
+  --accent-color: #3498db;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+  --bg-color: #f5f6fa;
+  --card-bg: #ffffff;
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --border-color: #ecf0f1;
+  --shadow: 0 2rpx 8rpx rgba(0,0,0,0.08);
+  --border-radius: 16rpx;
+  --btn-radius: 20rpx;
+  --progress-bg: rgba(102, 126, 234, 0.1);
+  --progress-fill-start: #667eea;
+  --progress-fill-end: #764ba2;
+  --banner-bg: rgba(102, 126, 234, 0.08);
+  --banner-border: rgba(102, 126, 234, 0.2);
+}
+
+/* 生活版（暖色调） */
+.theme-lifestyle {
+  --primary-color: #e67e22;
+  --primary-light: #f39c12;
+  --accent-color: #ff6f91;
+  --success-color: #6ab04c;
+  --warning-color: #f9ca24;
+  --danger-color: #eb4d4b;
+  --bg-color: #fff8f0;
+  --card-bg: #ffffff;
+  --text-primary: #2c3e50;
+  --text-secondary: #e67e22;
+  --border-color: #ffeaa7;
+  --shadow: 0 4rpx 16rpx rgba(230,126,34,0.15);
+  --border-radius: 20rpx;
+  --btn-radius: 25rpx;
+  --progress-bg: rgba(230, 126, 34, 0.1);
+  --progress-fill-start: #e67e22;
+  --progress-fill-end: #f39c12;
+  --banner-bg: rgba(230, 126, 34, 0.08);
+  --banner-border: rgba(230, 126, 34, 0.2);
+}
+
+/* ==================== 通用组件样式 ==================== */
+
+/* 通用容器 */
+.container {
+  min-height: 100vh;
+}
+
+/* 通用按钮 */
+button {
+  border-radius: var(--btn-radius, 8rpx);
+  font-size: 28rpx;
+  padding: 20rpx 40rpx;
+}
+
+button::after {
+  border: none;
+}
+
+/* 进度条 */
+.progress-bar {
+  width: 100%;
+  height: 8rpx;
+  background-color: var(--progress-bg, rgba(102, 126, 234, 0.1));
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--progress-fill-start, #667eea) 0%, var(--progress-fill-end, #764ba2) 100%);
+  transition: width 0.4s ease;
+}
+
+/* 卡片 */
+.card {
+  background-color: var(--card-bg, #ffffff);
+  border-radius: var(--border-radius, 16rpx);
+  box-shadow: var(--shadow, 0 2rpx 8rpx rgba(0,0,0,0.08));
+}
+
+/* 文字 */
+.text-primary {
+  color: var(--text-primary, #2c3e50);
+}
+
+.text-secondary {
+  color: var(--text-secondary, #7f8c8d);
+}
+
+/* 边框 */
+.thin-border {
+  border: 1rpx solid var(--border-color, #ecf0f1);
+}
+
+/* ==================== 生活版动画库 ==================== */
+
+/* 专业版（冷色调） */
+.theme-professional {
+  --primary-color: #2c3e50;
+  --primary-light: #34495e;
+  --accent-color: #3498db;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+  --bg-color: #f5f6fa;
+  --card-bg: #ffffff;
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --border-color: #ecf0f1;
+  --shadow: 0 2rpx 8rpx rgba(0,0,0,0.08);
+}
+
+/* 生活版（暖色调） */
+.theme-lifestyle {
+  --primary-color: #e67e22;
+  --primary-light: #f39c12;
+  --accent-color: #ff6f91;
+  --success-color: #6ab04c;
+  --warning-color: #f9ca24;
+  --danger-color: #eb4d4b;
+  --bg-color: #fff8f0;
+  --card-bg: #ffffff;
+  --text-primary: #2c3e50;
+  --text-secondary: #e67e22;
+  --border-color: #ffeaa7;
+  --shadow: 0 4rpx 16rpx rgba(230,126,34,0.15);
+}
+
+/* ==================== 生活版动画库 ==================== */
+
+/* 淡入动画 */
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 上浮淡入 */
+.fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 左滑淡入 */
+.slide-in-left {
+  animation: slideInLeft 0.4s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 弹跳 */
+.bounce {
+  animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* 脉冲（呼吸效果） */
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* 按钮点击反馈 */
+.button-active {
+  animation: scaleClick 0.2s ease-out;
+}
+
+@keyframes scaleClick {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+}
+
+/* 展开/收起过渡 */
+.expand-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
+  opacity: 0;
+}
+
+.expand-content.expanded {
+  max-height: 2000rpx;
+  opacity: 1;
+}
+

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>蜡笔小新风格 - 首页预览</title>
+    <style>
+        /* 引入主题样式 */
+        @import url('crayon-style.css');
+
+        /* 页面特定样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #FFF9F0 0%, #FFE4CC 50%, #FFF5E6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 顶部标题区 */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 100px;
+            animation: crayon-float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 50%, #4ECDC4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0 10px;
+            text-shadow: none;
+            animation: crayon-float 4s ease-in-out infinite;
+        }
+
+        .subtitle {
+            color: #6B5B95;
+            font-size: 18px;
+            letter-spacing: 4px;
+        }
+
+        /* 主题切换器 */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .theme-btn.active {
+            border-color: #FFD93D;
+            box-shadow: 0 0 0 4px #FFD93D;
+        }
+
+        /* 主要内容区 */
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 步骤指示器 */
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            padding: 0 20px;
+        }
+
+        .crayon-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .crayon-step-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #FFE4CC;
+            border: 6px solid #FFD93D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 24px;
+            color: #6B5B95;
+            transition: all 0.3s ease;
+        }
+
+        .crayon-step.active .crayon-step-circle {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%);
+            color: white;
+            border-color: #FF6B9D;
+            animation: crayon-pop 0.5s ease-out;
+        }
+
+        .crayon-step-line {
+            width: 60px;
+            height: 6px;
+            background: #FFE4CC;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .crayon-step.completed .crayon-step-line {
+            background: linear-gradient(90deg, #FF6B9D 0%, #FFD93D 100%);
+        }
+
+        /* 功能卡片区 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 30rpx;
+            border: 6rpx dashed #FFD93D;
+            box-shadow: 0 10rpx 40rpx rgba(255, 217, 61, 0.2);
+            padding: 32rpx;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10rpx) scale(1.02);
+            box-shadow: 0 20rpx 60rpx rgba(255, 107, 157, 0.3);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .crayon-card-decoration {
+            position: absolute;
+            top: -25rpx;
+            right: -25rpx;
+            width: 80rpx;
+            height: 80rpx;
+            background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40rpx;
+            animation: crayon-bounce 2s ease-in-out infinite;
+        }
+
+        .feature-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #FF6B9D;
+            margin-bottom: 12px;
+            text-shadow: 3rpx 3rpx 0 #FFD93D;
+        }
+
+        .feature-desc {
+            font-size: 26px;
+            color: #6B5B95;
+            line-height: 1.6;
+        }
+
+        /* 九宫格预览区 */
+        .grid-preview {
+            background: white;
+            border-radius: 30rpx;
+            border: 6rpx dashed #FFD93D;
+            box-shadow: 0 10rpx 40rpx rgba(255, 217, 61, 0.2);
+            padding: 32rpx;
+            margin: 40px 0;
+        }
+
+        .grid-title {
+            text-align: center;
+            margin-bottom: 32rpx;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16rpx;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .grid-cell {
+            aspect-ratio: 1;
+            background: white;
+            border: 6rpx solid #FFD93D;
+            border-radius: 24rpx;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 20rpx;
+            color: #6B5B95;
+            box-shadow: 0 8rpx 30rpx rgba(255, 217, 61, 0.3);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .grid-cell:hover {
+            transform: scale(1.08);
+        }
+
+        .grid-cell.filled {
+            background: linear-gradient(135deg, #FFE4CC 0%, #FFD93D 100%);
+            border-color: #FF6B9D;
+        }
+
+        .grid-cell.center {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%);
+            border: 8rpx solid #4ECDC4;
+            border-radius: 50%;
+            width: 140rpx;
+            height: 140rpx;
+            box-shadow: 0 0 0 8rpx rgba(255, 107, 157, 0.3), 0 10rpx 40rpx rgba(255, 107, 157, 0.4);
+            animation: crayon-float 3s ease-in-out infinite;
+            color: white;
+            font-weight: 700;
+        }
+
+        .grid-cell-label {
+            font-size: 20rpx;
+            text-align: center;
+            padding: 8rpx;
+        }
+
+        /* 核心问题输入区 */
+        .question-section {
+            background: white;
+            border-radius: 30rpx;
+            border: 6rpx dashed #FFD93D;
+            box-shadow: 0 10rpx 40rpx rgba(255, 217, 61, 0.2);
+            padding: 32rpx;
+            margin: 40px 0;
+        }
+
+        .question-title {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .question-input {
+            background: #FFF9F0;
+            border: 6rpx solid #FFD93D;
+            border-radius: 30rpx;
+            padding: 28rpx 36rpx;
+            font-size: 30rpx;
+            width: 100%;
+            min-height: 200rpx;
+            resize: none;
+            transition: all 0.3s ease;
+        }
+
+        .question-input:focus {
+            border-color: #FF6B9D;
+            box-shadow: 0 0 0 8rpx rgba(255, 107, 157, 0.2);
+            outline: none;
+        }
+
+        /* AI引导语 */
+        .ai-hint {
+            background: linear-gradient(135deg, #FFF9F0 0%, #FFE4CC 100%);
+            border-radius: 30rpx;
+            padding: 24rpx 32rpx;
+            margin: 24rpx 0;
+            border-left: 8rpx solid #FF6B9D;
+        }
+
+        .ai-hint-text {
+            font-size: 26rpx;
+            color: #6B5B95;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* 操作按钮区 */
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .crayon-btn {
+            border-radius: 50rpx !important;
+            padding: 24rpx 60rpx !important;
+            font-size: 32rpx !important;
+            font-weight: 700 !important;
+            border: none !important;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+
+        .crayon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .crayon-btn:hover::before {
+            left: 100%;
+        }
+
+        .crayon-btn:active {
+            transform: scale(0.95) !important;
+        }
+
+        .crayon-btn-primary {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FF8BA7 100%) !important;
+            color: white !important;
+            box-shadow: 0 8rpx 30rpx rgba(255, 107, 157, 0.4) !important;
+        }
+
+        .crayon-btn-secondary {
+            background: linear-gradient(135deg, #FFD93D 0%, #FFE066 100%) !important;
+            color: #2D1B4E !important;
+            box-shadow: 0 8rpx 30rpx rgba(255, 217, 61, 0.4) !important;
+        }
+
+        .crayon-btn-accent {
+            background: linear-gradient(135deg, #4ECDC4 0%, #6BD5D0 100%) !important;
+            color: white !important;
+            box-shadow: 0 8rpx 30rpx rgba(78, 205, 196, 0.4) !important;
+        }
+
+        /* 矛盾解析区 */
+        .conflict-section {
+            background: white;
+            border-radius: 30rpx;
+            border: 6rpx dashed #FF6B9D;
+            box-shadow: 0 10rpx 40rpx rgba(255, 107, 157, 0.2);
+            padding: 32rpx;
+            margin: 40px 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16rpx;
+            margin-bottom: 24rpx;
+        }
+
+        .section-number {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%);
+            color: white;
+            width: 56rpx;
+            height: 56rpx;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 28rpx;
+        }
+
+        .conflict-option {
+            background: #FFF9F0;
+            border: 6rpx solid #FFD93D;
+            border-radius: 30rpx;
+            padding: 24rpx 32rpx;
+            margin: 16rpx 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .conflict-option:hover {
+            transform: translateX(10rpx);
+            border-color: #FF6B9D;
+            box-shadow: 0 8rpx 30rpx rgba(255, 107, 157, 0.2);
+        }
+
+        .conflict-option.selected {
+            background: linear-gradient(135deg, #FFE4CC 0%, #FFD93D 100%);
+            border-color: #FF6B9D;
+        }
+
+        .conflict-name {
+            font-size: 28rpx;
+            font-weight: 600;
+            color: #2D1B4E;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-container {
+                max-width: 100%;
+            }
+
+            .crayon-step-line {
+                width: 30px;
+            }
+        }
+
+        /* 动画定义 */
+        @keyframes crayon-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes crayon-wiggle {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        @keyframes crayon-pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes crayon-float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主题切换器 -->
+    <div class="theme-switcher">
+        <div class="theme-btn active" style="background: linear-gradient(135deg, #FF6B9D, #FFD93D);" title="卡通风"></div>
+        <div class="theme-btn" style="background: linear-gradient(135deg, #667eea, #764ba2);" title="科技风"></div>
+        <div class="theme-btn" style="background: linear-gradient(135deg, #FFB5C5, #FFE4E1);" title="少女风"></div>
+    </div>
+
+    <!-- 顶部标题 -->
+    <header class="header">
+        <div class="logo">🧠</div>
+        <h1 class="hero-title">TRIZ 答案之书</h1>
+        <p class="subtitle">智能结构化 · 创新解决方案</p>
+    </header>
+
+    <!-- 主要内容 -->
+    <div class="content">
+        <!-- 步骤指示器 -->
+        <div class="steps-container">
+            <div class="crayon-step active">
+                <div class="crayon-step-circle">1</div>
+                <div class="crayon-step-line"></div>
+            </div>
+            <div class="crayon-step">
+                <div class="crayon-step-circle">2</div>
+                <div class="crayon-step-line"></div>
+            </div>
+            <div class="crayon-step">
+                <div class="crayon-step-circle">3</div>
+            </div>
+        </div>
+
+        <!-- 核心问题输入 -->
+        <section class="question-section">
+            <h2 class="crayon-title question-title">🎯 梳理你的故事</h2>
+
+            <div class="ai-hint">
+                <p class="ai-hint-text">"你提到现在为'选择犹豫'而困扰，那么，过去是否有过因为'选错'而被责备或后悔的经历呢？"</p>
+            </div>
+
+            <textarea class="question-input" placeholder="用你自己的话说吧..."></textarea>
+
+            <div class="actions">
+                <button class="crayon-btn crayon-btn-secondary">✨ AI解析填充</button>
+                <button class="crayon-btn crayon-btn-primary">继续 →</button>
+            </div>
+        </section>
+
+        <!-- 功能卡片 -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="crayon-card-decoration">📝</div>
+                <span class="feature-icon">📋</span>
+                <h3 class="feature-title">九宫格结构化</h3>
+                <p class="feature-desc">AI引导式问卷，智能挖掘问题背景，从不同角度呈现问题全貌</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="crayon-card-decoration">⚡</div>
+                <span class="feature-icon">💡</span>
+                <h3 class="feature-title">矛盾自动提取</h3>
+                <p class="feature-desc">自动识别内在冲突，将抽象问题转化为可操作的创新方向</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="crayon-card-decoration">🔧</div>
+                <span class="feature-icon">🎯</span>
+                <h3 class="feature-title">原理智能匹配</h3>
+                <p class="feature-desc">基于40个创新原理，AI精准推荐最适合的解决方案</p>
+            </div>
+        </section>
+
+        <!-- 九宫格预览 -->
+        <section class="grid-preview">
+            <h2 class="crayon-title grid-title">📊 九宫格预览</h2>
+            <div class="grid-container">
+                <div class="grid-cell">
+                    <span class="grid-cell-label">过去的超系统</span>
+                </div>
+                <div class="grid-cell">
+                    <span class="grid-cell-label">过去的系统</span>
+                </div>
+                <div class="grid-cell filled">
+                    <span class="grid-cell-label">过去的子系统</span>
+                </div>
+                <div class="grid-cell">
+                    <span class="grid-cell-label">当前的超系统</span>
+                </div>
+                <div class="grid-cell center">
+                    <span class="grid-cell-label">核心<br>问题</span>
+                </div>
+                <div class="grid-cell">
+                    <span class="grid-cell-label">当前的子系统</span>
+                </div>
+                <div class="grid-cell filled">
+                    <span class="grid-cell-label">未来的超系统</span>
+                </div>
+                <div class="grid-cell">
+                    <span class="grid-cell-label">未来的系统</span>
+                </div>
+                <div class="grid-cell">
+                    <span class="grid-cell-label">未来的子系统</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 矛盾解析 -->
+        <section class="conflict-section">
+            <div class="section-header">
+                <div class="section-number">02</div>
+                <h2 class="crayon-title">选择困境</h2>
+            </div>
+
+            <div class="conflict-option selected">
+                <div class="conflict-name">🔄 稳定性 vs 变化性</div>
+                <p style="font-size: 24rpx; color: #6B5B95; margin-top: 8rpx;">内心戏：既渴望确定性带来的安全感，又害怕一成不变让自己停滞</p>
+            </div>
+
+            <div class="conflict-option">
+                <div class="conflict-name">🎯 自主的渴望 vs 归属的安全</div>
+                <p style="font-size: 24rpx; color: #6B5B95; margin-top: 8rpx;">内心戏：想要自己做主，但又害怕孤单，希望被接纳</p>
+            </div>
+
+            <div class="conflict-option">
+                <div class="conflict-name">⏰ 即时满足 vs 长期成长</div>
+                <p style="font-size: 24rpx; color: #6B5B95; margin-top: 8rpx;">内心戏：想马上舒服，又担心错过更好的未来</p>
+            </div>
+
+            <div class="actions">
+                <button class="crayon-btn crayon-btn-accent">🧠 AI智能推荐原理</button>
+            </div>
+        </section>
+
+        <!-- 底部按钮 -->
+        <div class="actions">
+            <button class="crayon-btn crayon-btn-primary" style="width: 100%; max-width: 400px;">开始分析 →</button>
+        </div>
+    </div>
+
+    <script>
+        // 主题切换功能
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 卡片点击效果
+        document.querySelectorAll('.feature-card, .conflict-option').forEach(card => {
+            card.addEventListener('click', function() {
+                if (this.classList.contains('conflict-option')) {
+                    document.querySelectorAll('.conflict-option').forEach(c => c.classList.remove('selected'));
+                }
+                this.classList.add('selected');
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // 按钮点击波纹效果
+        document.querySelectorAll('.crayon-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.style.cssText = `
+                    position: absolute;
+                    background: rgba(255,255,255,0.5);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+                ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // 添加波纹动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log('✅ 卡通风首页预览已加载');
+        console.log('当前主题: 蜡笔小新版');
+        console.log('功能: 点击卡片和按钮有交互效果');
+    </script>
+</body>
+</html>

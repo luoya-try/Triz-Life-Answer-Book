@@ -1,0 +1,401 @@
+/* 🎨 卡通风 - 蜡笔小新主题配色方案 */
+
+/* ========== 主题变量定义 ========== */
+:root {
+  /* 卡通风核心配色 - 蜡笔小新灵感 */
+  --cartoon-primary: #FF6B9D;      /* 粉色 - 主角团粉色 */
+  --cartoon-secondary: #FFD93D;    /* 黄色 - 小新的黄色动感泳裤 */
+  --cartoon-accent: #4ECDC4;       /* 青绿色 - 小白类似的小白 */
+  --cartoon-success: #6BCB77;      /* 绿色 - 活力绿 */
+  --cartoon-warning: #FF8B8B;      /* 珊瑚红 */
+
+  /* 背景色 - 温暖的米色 */
+  --cartoon-bg-light: #FFF9F0;     /* 浅米色 */
+  --cartoon-bg-main: #FFF5E6;      /* 主背景 */
+  --cartoon-bg-card: #FFFFFF;      /* 卡片白 */
+
+  /* 文字色 - 偏暖的深色 */
+  --cartoon-text-primary: #2D1B4E; /* 主文字 - 深紫 */
+  --cartoon-text-secondary: #6B5B95; /* 次要文字 */
+  --cartoon-text-light: #9B8EBF;   /* 浅文字 */
+
+  /* 边框和装饰 */
+  --cartoon-border: #FFD700;       /* 金色边框 */
+  --cartoon-shadow: rgba(255, 107, 157, 0.3); /* 粉色阴影 */
+
+  /* 圆角 - 大圆角 */
+  --cartoon-radius-sm: 12rpx;
+  --cartoon-radius-md: 20rpx;
+  --cartoon-radius-lg: 30rpx;
+  --cartoon-radius-xl: 50rpx;
+  --cartoon-radius-full: 9999rpx;
+
+  /* 字体 - 圆润可爱 */
+  --cartoon-font-heading: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  --cartoon-font-body: "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/* ========== 全局主题应用 ========== */
+.cartoon-theme {
+  background: linear-gradient(135deg, #FFF9F0 0%, #FFE4CC 50%, #FFF5E6 100%) !important;
+  min-height: 100vh;
+}
+
+/* ========== 动画定义 ========== */
+@keyframes crayon-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes crayon-wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes crayon-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes crayon-float {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+@keyframes crayon-shine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ========== 按钮样式 ========== */
+.crayon-btn {
+  border-radius: 50rpx !important;
+  padding: 24rpx 60rpx !important;
+  font-size: 32rpx !important;
+  font-weight: 700 !important;
+  border: none !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.crayon-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.crayon-btn:hover::before {
+  left: 100%;
+}
+
+.crayon-btn:active {
+  transform: scale(0.95) !important;
+}
+
+/* 粉色主按钮 */
+.crayon-btn-primary {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FF8BA7 100%) !important;
+  color: white !important;
+  box-shadow: 0 8rpx 30rpx rgba(255, 107, 157, 0.4) !important;
+}
+
+/* 黄色辅助按钮 */
+.crayon-btn-secondary {
+  background: linear-gradient(135deg, #FFD93D 0%, #FFE066 100%) !important;
+  color: #2D1B4E !important;
+  box-shadow: 0 8rpx 30rpx rgba(255, 217, 61, 0.4) !important;
+}
+
+/* 青绿按钮 */
+.crayon-btn-accent {
+  background: linear-gradient(135deg, #4ECDC4 0%, #6BD5D0 100%) !important;
+  color: white !important;
+  box-shadow: 0 8rpx 30rpx rgba(78, 205, 196, 0.4) !important;
+}
+
+/* ========== 卡片样式 ========== */
+.crayon-card {
+  background: white !important;
+  border-radius: 30rpx !important;
+  border: 6rpx dashed #FFD93D !important;
+  box-shadow: 0 10rpx 40rpx rgba(255, 217, 61, 0.2) !important;
+  padding: 32rpx !important;
+}
+
+.crayon-card:hover {
+  transform: translateY(-5rpx);
+  box-shadow: 0 15rpx 50rpx rgba(255, 107, 157, 0.3) !important;
+}
+
+/* ========== 标题样式 ========== */
+.crayon-title {
+  font-family: var(--cartoon-font-heading) !important;
+  font-weight: 900 !important;
+  color: #FF6B9D !important;
+  font-size: 48rpx !important;
+  text-shadow: 4rpx 4rpx 0 #FFD93D !important;
+  letter-spacing: 2rpx;
+}
+
+/* ========== 标签样式 ========== */
+.crayon-tag {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 100%) !important;
+  color: white !important;
+  padding: 12rpx 24rpx !important;
+  border-radius: 50rpx !important;
+  font-size: 24rpx !important;
+  font-weight: 700 !important;
+}
+
+/* ========== 输入框样式 ========== */
+.crayon-input {
+  background: #FFF9F0 !important;
+  border: 6rpx solid #FFD93D !important;
+  border-radius: 30rpx !important;
+  padding: 28rpx 36rpx !important;
+  font-size: 30rpx !important;
+  transition: all 0.3s ease;
+}
+
+.crayon-input:focus {
+  border-color: #FF6B9D !important;
+  box-shadow: 0 0 0 8rpx rgba(255, 107, 157, 0.2) !important;
+  outline: none;
+}
+
+/* ========== 进度条样式 ========== */
+.crayon-progress {
+  background: #FFE4CC !important;
+  border-radius: 50rpx !important;
+  height: 16rpx !important;
+  overflow: hidden;
+}
+
+.crayon-progress-bar {
+  background: linear-gradient(90deg, #FF6B9D 0%, #FFD93D 50%, #4ECDC4 100%) !important;
+  border-radius: 50rpx !important;
+  transition: width 0.5s ease;
+}
+
+/* ========== 动画应用 ========== */
+.crayon-animate-bounce {
+  animation: crayon-bounce 2s ease-in-out infinite;
+}
+
+.crayon-animate-wiggle {
+  animation: crayon-wiggle 3s ease-in-out infinite;
+}
+
+.crayon-animate-pop {
+  animation: crayon-pop 0.5s ease-out;
+}
+
+.crayon-animate-float {
+  animation: crayon-float 4s ease-in-out infinite;
+}
+
+/* ========== 九宫格特定样式 ========== */
+.crayon-grid-cell {
+  background: white !important;
+  border: 6rpx solid #FFD93D !important;
+  border-radius: 24rpx !important;
+  box-shadow: 0 8rpx 30rpx rgba(255, 217, 61, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.crayon-grid-cell:hover {
+  transform: scale(1.05);
+}
+
+.crayon-grid-cell.filled {
+  background: linear-gradient(135deg, #FFE4CC 0%, #FFD93D 100%) !important;
+  border-color: #FF6B9D !important;
+}
+
+.crayon-grid-cell.active {
+  border-color: #FF6B9D !important;
+  box-shadow: 0 0 0 8rpx rgba(255, 107, 157, 0.3) !important;
+  transform: scale(1.05);
+}
+
+.crayon-center-cell {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  border: 8rpx solid #4ECDC4 !important;
+  border-radius: 50% !important;
+  width: 160rpx !important;
+  height: 160rpx !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 0 0 8rpx rgba(255, 107, 157, 0.3), 0 10rpx 40rpx rgba(255, 107, 157, 0.4) !important;
+  animation: crayon-float 3s ease-in-out infinite;
+}
+
+/* ========== 原理卡片样式 ========== */
+.crayon-principle-card {
+  background: white !important;
+  border: 6rpx solid #4ECDC4 !important;
+  border-radius: 30rpx !important;
+  box-shadow: 0 8rpx 30rpx rgba(78, 205, 196, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.crayon-principle-card:hover {
+  transform: translateY(-8rpx);
+  box-shadow: 0 15rpx 50rpx rgba(78, 205, 196, 0.3) !important;
+}
+
+.crayon-principle-card.selected {
+  background: linear-gradient(135deg, #FFE4CC 0%, #FFD93D 100%) !important;
+  border-color: #FF6B9D !important;
+  transform: scale(1.02) !important;
+}
+
+/* ========== 复选框样式 ========== */
+.crayon-checkbox {
+  width: 52rpx !important;
+  height: 52rpx !important;
+  border: 6rpx solid #FFD93D !important;
+  border-radius: 50% !important;
+  background: white !important;
+  transition: all 0.3s ease;
+}
+
+.crayon-checkbox[checked] {
+  background: #FF6B9D !important;
+  border-color: #FF6B9D !important;
+}
+
+/* ========== 工具类 ========== */
+.crayon-text-gradient {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.crayon-border-bottom {
+  border-bottom: 6rpx dashed #FFD93D !important;
+  padding-bottom: 16rpx;
+}
+
+/* ========== 图标样式 ========== */
+.crayon-icon {
+  font-size: 56rpx !important;
+  animation: crayon-bounce 1.5s ease-in-out infinite;
+}
+
+/* ========== 空状态 ========== */
+.crayon-empty {
+  background: linear-gradient(135deg, #FFF9F0 0%, #FFE4CC 100%) !important;
+  border: 6rpx dashed #FFD93D !important;
+  border-radius: 30rpx !important;
+  padding: 80rpx 40rpx !important;
+}
+
+.crayon-empty-icon {
+  font-size: 100rpx !important;
+  animation: crayon-float 3s ease-in-out infinite;
+}
+
+/* ========== 主题切换器 ========== */
+.theme-switcher {
+  position: fixed;
+  top: 20rpx;
+  right: 20rpx;
+  z-index: 1000;
+  display: flex;
+  gap: 16rpx;
+}
+
+.theme-btn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  border: 4rpx solid white;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.theme-btn:hover {
+  transform: scale(1.1);
+}
+
+.theme-btn.active {
+  border-color: #FFD93D;
+  box-shadow: 0 0 0 4rpx #FFD93D;
+}
+
+/* ========== 文字渐变标题 ========== */
+.crayon-hero-title {
+  font-size: 72rpx;
+  font-weight: 900;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 50%, #4ECDC4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  animation: crayon-float 4s ease-in-out infinite;
+}
+
+/* ========== 卡片装饰 ========== */
+.crayon-card-decoration {
+  position: absolute;
+  top: -20rpx;
+  right: -20rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  animation: crayon-bounce 2s ease-in-out infinite;
+}
+
+/* ========== 步骤指示器 ========== */
+.crayon-step {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.crayon-step-circle {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #FFE4CC;
+  border: 6rpx solid #FFD93D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 28rpx;
+  color: #6B5B95;
+}
+
+.crayon-step.active .crayon-step-circle {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%);
+  color: white;
+  border-color: #FF6B9D;
+}
+
+.crayon-step-line {
+  flex: 1;
+  height: 6rpx;
+  background: #FFE4CC;
+  border-radius: 3rpx;
+}
+
+.crayon-step.completed .crayon-step-line {
+  background: linear-gradient(90deg, #FF6B9D 0%, #FFD93D 100%);
+}

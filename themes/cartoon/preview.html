@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TRIZ答案之书 - 蜡笔小新风格</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zcool+KuaiLe&family=Bangers&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        /* ==================== 蜡笔小新主题配色 ==================== */
+        :root {
+            --cartoon-pink: #FF6B9D;
+            --cartoon-yellow: #FFD93D;
+            --cartoon-orange: #FF9A6C;
+            --cartoon-teal: #4ECDC4;
+            --cartoon-purple: #A78BFA;
+            --cartoon-cream: #FFF5E6;
+            --cartoon-coral: #FF8BA7;
+            --cartoon-blue: #7DD3FC;
+            --cartoon-text: #2D1B4E;
+            --cartoon-text-light: #6B5B95;
+            --cartoon-shadow: rgba(255, 107, 157, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #FFF9F0 0%, #FFE4CC 30%, #FFF5E6 70%, #FFE4E1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ==================== 顶部导航栏 ==================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 20rpx;
+            right: 20rpx;
+            height: 100rpx;
+            background: white;
+            border-radius: 0 0 30rpx 30rpx;
+            box-shadow: 0 8rpx 30rpx rgba(255, 107, 157, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30rpx;
+            z-index: 100;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 15rpx;
+        }
+
+        .navbar-logo span {
+            font-size: 50rpx;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .navbar-logo text {
+            font-family: 'Bangers', cursive;
+            font-size: 36rpx;
+            background: linear-gradient(135deg, var(--cartoon-pink), var(--cartoon-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2rpx;
+        }
+
+        .theme-switcher {
+            display: flex;
+            gap: 15rpx;
+        }
+
+        .theme-dot {
+            width: 50rpx;
+            height: 50rpx;
+            border-radius: 50%;
+            border: 4rpx solid white;
+            box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .theme-dot:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .theme-dot.active {
+            border-color: var(--cartoon-yellow);
+            box-shadow: 0 0 0 4rpx rgba(255, 217, 61, 0.5);
+        }
+
+        /* ==================== 主容器 ==================== */
+        .container {
+            padding: 130rpx 30rpx 40rpx;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ==================== 页面切换 ==================== */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20rpx); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==================== 步骤指示器 ==================== */
+        .steps-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            margin: 40rpx 0;
+            position: relative;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 15rpx;
+        }
+
+        .step-circle {
+            width: 70rpx;
+            height: 70rpx;
+            border-radius: 50%;
+            background: white;
+            border: 6rpx solid var(--cartoon-cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: 32rpx;
+            color: var(--cartoon-text-light);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-circle.active {
+            background: linear-gradient(135deg, var(--cartoon-pink), var(--cartoon-coral));
+            border-color: var(--cartoon-pink);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 8rpx 25rpx rgba(255, 107, 157, 0.4);
+            animation: pop 0.5s ease-out;
+        }
+
+        .step-circle.completed {
+            background: linear-gradient(135deg, var(--cartoon-yellow), var(--cartoon-orange));
+            border-color: var(--cartoon-yellow);
+            color: var(--cartoon-text);
+        }
+
+        .step-line {
+            width: 80rpx;
+            height: 8rpx;
+            background: var(--cartoon-cream);
+            border-radius: 4rpx;
+            transition: all 0.3s ease;
+        }
+
+        .step-line.filled {
+            background: linear-gradient(90deg, var(--cartoon-pink), var(--cartoon-yellow));
+        }
+
+        .step-label {
+            position: absolute;
+            bottom: -35rpx;
+            font-size: 20rpx;
+            color: var(--cartoon-text-light);
+            white-space: nowrap;
+        }
+
+        /* ==================== 大标题区域 ==================== */
+        .hero-section {
+            text-align: center;
+            padding: 40rpx 0;
+        }
+
+        .hero-icon {
+            font-size: 120rpx;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+            filter: drop-shadow(0 10rpx 20rpx rgba(255, 107, 157, 0.3));
+        }
+
+        .hero-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 56rpx;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--cartoon-pink) 0%, var(--cartoon-yellow) 50%, var(--cartoon-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20rpx 0;
+            text-shadow: none;
+            animation: wiggle 4s ease-in-out infinite;
+        }
+
+        .hero-subtitle {
+            font-size: 26rpx;
+            color: var(--cartoon-text-light);
+            letter-spacing: 4rpx;
+        }
+
+        /* ==================== 九宫格区域 ==================== */
+        .grid-section {
+            background: white;
+            border-radius: 40rpx;
+            border: 8rpx dashed var(--cartoon-yellow);
+            padding: 40rpx;
+            margin: 40rpx 0;
+            box-shadow: 0 15rpx 50rpx rgba(255, 217, 61, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-badge {
+            position: absolute;
+            top: -15rpx;
+            right: 30rpx;
+            background: linear-gradient(135deg, var(--cartoon-pink), var(--cartoon-coral));
+            color: white;
+            padding: 10rpx 25rpx;
+            border-radius: 30rpx;
+            font-size: 24rpx;
+            font-weight: bold;
+            box-shadow: 0 4rpx 15rpx rgba(255, 107, 157, 0.4);
+        }
+
+        .section-title {
+            font-family: 'Bangers', cursive;
+            font-size: 40rpx;
+            color: var(--cartoon-pink);
+            text-align: center;
+            margin-bottom: 30rpx;
+            letter-spacing: 2rpx;
+        }
+
+        .nine-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16rpx;
+            max-width: 500rpx;
+            margin: 0 auto;
+        }
+
+        .grid-cell {
+            aspect-ratio: 1;
+            background: white;
+            border: 5rpx solid var(--cartoon-yellow);
+            border-radius: 20rpx;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 20rpx;
+            color: var(--cartoon-text-light);
+            box-shadow: 0 6rpx 20rpx rgba(255, 217, 61, 0.3);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-cell:hover {
+            transform: translateY(-8rpx) scale(1.05);
+            box-shadow: 0 12rpx 35rpx rgba(255, 107, 157, 0.3);
+        }
+
+        .grid-cell.filled {
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+            border-color: var(--cartoon-orange);
+        }
+
+        .grid-cell.center {
+            background: linear-gradient(135deg, var(--cartoon-pink), var(--cartoon-coral));
+            border: 8rpx solid var(--cartoon-teal);
+            border-radius: 50%;
+            width: 140rpx;
+            height: 140rpx;
+            margin: -20rpx;
+            box-shadow: 0 0 0 8rpx rgba(255, 107, 157, 0.2), 0 15rpx 40rpx rgba(255, 107, 157, 0.4);
+            animation: bounce 2s ease-in-out infinite;
+            color: white;
+            font-weight: bold;
+            font-size: 24rpx;
+        }
+
+        .grid-cell-label {
+            font-size: 20rpx;
+            text-align: center;
+            padding: 8rpx;
+            line-height: 1.4;
+        }
+
+        .grid-cell-icon {
+            font-size: 36rpx;
+            margin-bottom: 8rpx;
+        }
+
+        /* ==================== 问题输入区域 ==================== */
+        .question-section {
+            background: white;
+            border-radius: 40rpx;
+            border: 8rpx dashed var(--cartoon-pink);
+            padding: 40rpx;
+            margin: 40rpx 0;
+            box-shadow: 0 15rpx 50rpx rgba(255, 107, 157, 0.2);
+        }
+
+        .ai-hint-box {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border-radius: 25rpx;
+            padding: 25rpx 30rpx;
+            margin: 30rpx 0;
+            border-left: 10rpx solid var(--cartoon-yellow);
+            position: relative;
+        }
+
+        .ai-avatar {
+            position: absolute;
+            top: -20rpx;
+            left: 20rpx;
+            width: 60rpx;
+            height: 60rpx;
+            background: linear-gradient(135deg, var(--cartoon-teal), var(--cartoon-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30rpx;
+            box-shadow: 0 4rpx 15rpx rgba(78, 205, 196, 0.4);
+        }
+
+        .ai-hint-text {
+            font-size: 26rpx;
+            color: var(--cartoon-text);
+            line-height: 1.8;
+            font-style: italic;
+            padding-left: 50rpx;
+        }
+
+        .question-input {
+            width: 100%;
+            min-height: 200rpx;
+            background: var(--cartoon-cream);
+            border: 5rpx solid var(--cartoon-cream);
+            border-radius: 25rpx;
+            padding: 25rpx 30rpx;
+            font-size: 28rpx;
+            color: var(--cartoon-text);
+            resize: none;
+            transition: all 0.3s ease;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: var(--cartoon-pink);
+            box-shadow: 0 0 0 8rpx rgba(255, 107, 157, 0.15);
+        }
+
+        .question-input::placeholder {
+            color: var(--cartoon-text-light);
+        }
+
+        /* ==================== 功能卡片 ==================== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280rpx, 1fr));
+            gap: 25rpx;
+            margin: 40rpx 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 35rpx;
+            border: 6rpx dashed var(--cartoon-yellow);
+            padding: 35rpx;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12rpx) rotate(-2deg);
+            box-shadow: 0 20rpx 50rpx rgba(255, 107, 157, 0.25);
+        }
+
+        .card-decoration {
+            position: absolute;
+            top: -20rpx;
+            right: -20rpx;
+            width: 90rpx;
+            height: 90rpx;
+            background: linear-gradient(135deg, var(--cartoon-yellow), var(--cartoon-orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45rpx;
+            animation: spin 8s linear infinite;
+        }
+
+        .feature-icon {
+            font-size: 70rpx;
+            margin-bottom: 20rpx;
+            display: block;
+        }
+
+        .feature-title {
+            font-family: 'Bangers', cursive;
+            font-size: 34rpx;
+            color: var(--cartoon-pink);
+            margin-bottom: 15rpx;
+            letter-spacing: 1rpx;
+        }
+
+        .feature-desc {
+            font-size: 24rpx;
+            color: var(--cartoon-text-light);
+            line-height: 1.7;
+        }
+
+        /* ==================== 矛盾解析区域 ==================== */
+        .conflict-card {
+            background: white;
+            border-radius: 35rpx;
+            border: 8rpx dashed var(--cartoon-coral);
+            padding: 35rpx;
+            margin: 25rpx 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .conflict-card:hover {
+            transform: translateX(10rpx);
+            border-color: var(--cartoon-pink);
+            box-shadow: 0 10rpx 35rpx rgba(255, 107, 157, 0.2);
+        }
+
+        .conflict-card.selected {
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+            border-color: var(--cartoon-orange);
+        }
+
+        .conflict-header {
+            display: flex;
+            align-items: center;
+            gap: 20rpx;
+            margin-bottom: 15rpx;
+        }
+
+        .conflict-number {
+            width: 60rpx;
+            height: 60rpx;
+            background: linear-gradient(135deg, var(--cartoon-pink), var(--cartoon-coral));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Bangers', cursive;
+            font-size: 28rpx;
+        }
+
+        .conflict-name {
+            font-size: 30rpx;
+            font-weight: bold;
+            color: var(--cartoon-text);
+        }
+
+        .conflict-detail {
+            font-size: 24rpx;
+            color: var(--cartoon-text-light);
+            padding-left: 80rpx;
+            line-height: 1.6;
+        }
+
+        /* ==================== 解决方案区域 ==================== */
+        .solution-card {
+            background: white;
+            border-radius: 35rpx;
+            border: 8rpx solid var(--cartoon-teal);
+            padding: 35rpx;
+            margin: 25rpx 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8rpx;
+            background: linear-gradient(90deg, var(--cartoon-pink), var(--cartoon-yellow), var(--cartoon-teal));
+        }
+
+        .solution-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25rpx;
+        }
+
+        .solution-rank {
+            display: flex;
+            align-items: center;
+            gap: 15rpx;
+        }
+
+        .rank-badge {
+            width: 70rpx;
+            height: 70rpx;
+            background: linear-gradient(135deg, var(--cartoon-yellow), var(--cartoon-orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: 32rpx;
+            color: var(--cartoon-text);
+            box-shadow: 0 4rpx 15rpx rgba(255, 217, 61, 0.4);
+        }
+
+        .solution-title {
+            font-size: 32rpx;
+            font-weight: bold;
+            color: var(--cartoon-text);
+        }
+
+        .solution-score {
+            background: linear-gradient(135deg, var(--cartoon-teal), var(--cartoon-blue));
+            color: white;
+            padding: 8rpx 20rpx;
+            border-radius: 20rpx;
+            font-size: 22rpx;
+            font-weight: bold;
+        }
+
+        .solution-content {
+            font-size: 26rpx;
+            color: var(--cartoon-text-light);
+            line-height: 1.8;
+            padding: 20rpx;
+            background: var(--cartoon-cream);
+            border-radius: 20rpx;
+            margin-bottom: 20rpx;
+        }
+
+        .solution-principle {
+            display: flex;
+            align-items: center;
+            gap: 15rpx;
+            padding: 15rpx 20rpx;
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(125, 211, 252, 0.1));
+            border-radius: 15rpx;
+        }
+
+        .principle-label {
+            font-size: 24rpx;
+            color: var(--cartoon-teal);
+            font-weight: bold;
+        }
+
+        .principle-name {
+            font-size: 24rpx;
+            color: var(--cartoon-text);
+        }
+
+        /* ==================== 按钮样式 ==================== */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20rpx;
+            margin: 40rpx 0;
+            flex-wrap: wrap;
+        }
+
+        .cartoon-btn {
+            border-radius: 50rpx !important;
+            padding: 25rpx 55rpx !important;
+            font-size: 28rpx !important;
+            font-weight: bold !important;
+            border: none !important;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+
+        .cartoon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cartoon-btn:hover::before {
+            left: 100%;
+        }
+
+        .cartoon-btn:active {
+            transform: scale(0.95) !important;
+        }
+
+        .cartoon-btn-primary {
+            background: linear-gradient(135deg, var(--cartoon-pink) 0%, var(--cartoon-coral) 100%) !important;
+            color: white !important;
+            box-shadow: 0 8rpx 30rpx rgba(255, 107, 157, 0.4) !important;
+        }
+
+        .cartoon-btn-secondary {
+            background: linear-gradient(135deg, var(--cartoon-yellow) 0%, var(--cartoon-orange) 100%) !important;
+            color: var(--cartoon-text) !important;
+            box-shadow: 0 8rpx 30rpx rgba(255, 217, 61, 0.4) !important;
+        }
+
+        .cartoon-btn-accent {
+            background: linear-gradient(135deg, var(--cartoon-teal) 0%, var(--cartoon-blue) 100%) !important;
+            color: white !important;
+            box-shadow: 0 8rpx 30rpx rgba(78, 205, 196, 0.4) !important;
+        }
+
+        .cartoon-btn-outline {
+            background: white !important;
+            color: var(--cartoon-pink) !important;
+            border: 5rpx solid var(--cartoon-pink) !important;
+            box-shadow: 0 4rpx 20rpx rgba(255, 107, 157, 0.2) !important;
+        }
+
+        .cartoon-btn-lg {
+            width: 100%;
+            max-width: 500rpx;
+            padding: 30rpx 60rpx !important;
+            font-size: 32rpx !important;
+        }
+
+        /* ==================== 底部导航 ==================== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 30rpx;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15rpx;
+            background: white;
+            padding: 15rpx 25rpx;
+            border-radius: 50rpx;
+            box-shadow: 0 10rpx 40rpx rgba(0, 0, 0, 0.15);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6rpx;
+            padding: 15rpx 25rpx;
+            border-radius: 30rpx;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100rpx;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--cartoon-pink), var(--cartoon-coral));
+        }
+
+        .nav-item.active .nav-icon,
+        .nav-item.active .nav-label {
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 36rpx;
+            color: var(--cartoon-text-light);
+            transition: all 0.3s ease;
+        }
+
+        .nav-label {
+            font-size: 20rpx;
+            color: var(--cartoon-text-light);
+            font-weight: bold;
+        }
+
+        /* ==================== 动画定义 ==================== */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10rpx); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20rpx) rotate(5deg); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ==================== 响应式 ==================== */
+        @media (max-width: 768rpx) {
+            .hero-title {
+                font-size: 48rpx;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nine-grid {
+                max-width: 100%;
+            }
+
+            .grid-cell.center {
+                width: 120rpx;
+                height: 120rpx;
+                margin: -10rpx;
+            }
+
+            .step-line {
+                width: 40rpx;
+            }
+
+            .bottom-nav {
+                width: calc(100% - 60rpx);
+                justify-content: space-around;
+            }
+
+            .nav-item {
+                padding: 12rpx 15rpx;
+                min-width: auto;
+            }
+        }
+
+        /* ==================== 底部占位 ==================== */
+        .bottom-placeholder {
+            height: 120rpx;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <span>🧠</span>
+            <text>TRIZ</text>
+        </div>
+        <div class="theme-switcher">
+            <div class="theme-dot active" style="background: linear-gradient(135deg, #FF6B9D, #FFD93D);" title="卡通风" onclick="switchTheme('cartoon')"></div>
+            <div class="theme-dot" style="background: linear-gradient(135deg, #667eea, #764ba2);" title="科技风" onclick="switchTheme('tech')"></div>
+            <div class="theme-dot" style="background: linear-gradient(135deg, #FFB5C5, #FFE4E1);" title="少女风" onclick="switchTheme('sweet')"></div>
+        </div>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- ==================== 页面1: 首页九宫格 ==================== -->
+        <div class="page active" id="page-home">
+            <!-- 步骤指示器 -->
+            <div class="steps-indicator">
+                <div class="step-item">
+                    <div class="step-circle active">1<div class="step-label">九宫格</div></div>
+                    <div class="step-line filled"></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">2<div class="step-label">矛盾</div></div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">3<div class="step-label">方案</div></div>
+                </div>
+            </div>
+
+            <!-- 标题区 -->
+            <div class="hero-section">
+                <div class="hero-icon">📚</div>
+                <h1 class="hero-title">TRIZ 答案之书</h1>
+                <p class="hero-subtitle">智能结构化 · 创新解决方案</p>
+            </div>
+
+            <!-- 九宫格区域 -->
+            <div class="grid-section">
+                <span class="section-badge">STEP 1</span>
+                <h2 class="section-title">📊 九宫格结构化</h2>
+                <div class="nine-grid">
+                    <div class="grid-cell">
+                        <span class="grid-cell-icon">🏛️</span>
+                        <span class="grid-cell-label">过去<br>超系统</span>
+                    </div>
+                    <div class="grid-cell">
+                        <span class="grid-cell-icon">🏠</span>
+                        <span class="grid-cell-label">过去<br>系统</span>
+                    </div>
+                    <div class="grid-cell filled">
+                        <span class="grid-cell-icon">🧩</span>
+                        <span class="grid-cell-label">过去<br>子系统</span>
+                    </div>
+                    <div class="grid-cell">
+                        <span class="grid-cell-icon">🌆</span>
+                        <span class="grid-cell-label">当前<br>超系统</span>
+                    </div>
+                    <div class="grid-cell center">
+                        <span class="grid-cell-label">核心<br>问题</span>
+                    </div>
+                    <div class="grid-cell">
+                        <span class="grid-cell-icon">🔧</span>
+                        <span class="grid-cell-label">当前<br>子系统</span>
+                    </div>
+                    <div class="grid-cell filled">
+                        <span class="grid-cell-icon">🚀</span>
+                        <span class="grid-cell-label">未来<br>超系统</span>
+                    </div>
+                    <div class="grid-cell">
+                        <span class="grid-cell-icon">✨</span>
+                        <span class="grid-cell-label">未来<br>系统</span>
+                    </div>
+                    <div class="grid-cell">
+                        <span class="grid-cell-icon">🎯</span>
+                        <span class="grid-cell-label">未来<br>子系统</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI引导输入 -->
+            <div class="question-section">
+                <span class="section-badge">AI 引导</span>
+                <h2 class="section-title">💬 描述你的困境</h2>
+
+                <div class="ai-hint-box">
+                    <div class="ai-avatar">🤖</div>
+                    <p class="ai-hint-text">"你提到现在为'选择犹豫'而困扰，那么，过去是否有过因为'选错'而被责备或后悔的经历呢？"</p>
+                </div>
+
+                <textarea class="question-input" placeholder="用你自己的话说出你的问题和困扰..."></textarea>
+
+                <div class="btn-group">
+                    <button class="cartoon-btn cartoon-btn-secondary" onclick="aiFill()">✨ AI 智能解析</button>
+                    <button class="cartoon-btn cartoon-btn-primary" onclick="goToPage(2)">继续 →</button>
+                </div>
+            </div>
+
+            <!-- 功能卡片 -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="card-decoration">📋</div>
+                    <span class="feature-icon">🧠</span>
+                    <h3 class="feature-title">九宫格结构化</h3>
+                    <p class="feature-desc">AI引导式问卷，智能挖掘问题背景，从不同角度呈现问题全貌</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="card-decoration">⚡</div>
+                    <span class="feature-icon">🔍</span>
+                    <h3 class="feature-title">矛盾自动提取</h3>
+                    <p class="feature-desc">自动识别内在冲突，将抽象问题转化为可操作的创新方向</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="card-decoration">🎯</div>
+                    <span class="feature-icon">💡</span>
+                    <h3 class="feature-title">原理智能匹配</h3>
+                    <p class="feature-desc">基于40个创新原理，AI精准推荐最适合的解决方案</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 页面2: 矛盾解析 ==================== -->
+        <div class="page" id="page-conflict">
+            <!-- 步骤指示器 -->
+            <div class="steps-indicator">
+                <div class="step-item">
+                    <div class="step-circle completed">✓<div class="step-label">九宫格</div></div>
+                    <div class="step-line filled"></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle active">2<div class="step-label">矛盾</div></div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">3<div class="step-label">方案</div></div>
+                </div>
+            </div>
+
+            <!-- 标题区 -->
+            <div class="hero-section">
+                <div class="hero-icon">⚖️</div>
+                <h1 class="hero-title">矛盾解析</h1>
+                <p class="hero-subtitle">识别内在冲突 · 找到创新方向</p>
+            </div>
+
+            <!-- 矛盾列表 -->
+            <div class="grid-section">
+                <span class="section-badge">STEP 2</span>
+                <h2 class="section-title">🎭 核心矛盾</h2>
+
+                <div class="conflict-card selected" onclick="selectConflict(this)">
+                    <div class="conflict-header">
+                        <div class="conflict-number">01</div>
+                        <div class="conflict-name">🔄 稳定性 vs 变化性</div>
+                    </div>
+                    <div class="conflict-detail">
+                        内心戏：既渴望确定性带来的安全感，又害怕一成不变让自己停滞
+                    </div>
+                </div>
+
+                <div class="conflict-card" onclick="selectConflict(this)">
+                    <div class="conflict-header">
+                        <div class="conflict-number">02</div>
+                        <div class="conflict-name">🎯 自主的渴望 vs 归属的安全</div>
+                    </div>
+                    <div class="conflict-detail">
+                        内心戏：想要自己做主，但又害怕孤单，希望被接纳
+                    </div>
+                </div>
+
+                <div class="conflict-card" onclick="selectConflict(this)">
+                    <div class="conflict-header">
+                        <div class="conflict-number">03</div>
+                        <div class="conflict-name">⏰ 即时满足 vs 长期成长</div>
+                    </div>
+                    <div class="conflict-detail">
+                        内心戏：想马上舒服，又担心错过更好的未来
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="cartoon-btn cartoon-btn-outline" onclick="goToPage(1)">← 返回</button>
+                    <button class="cartoon-btn cartoon-btn-accent" onclick="goToPage(3)">🧠 AI 推荐方案</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 页面3: 解决方案生成 ==================== -->
+        <div class="page" id="page-solution">
+            <!-- 步骤指示器 -->
+            <div class="steps-indicator">
+                <div class="step-item">
+                    <div class="step-circle completed">✓<div class="step-label">九宫格</div></div>
+                    <div class="step-line filled"></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle completed">✓<div class="step-label">矛盾</div></div>
+                    <div class="step-line filled"></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle active">3<div class="step-label">方案</div></div>
+                </div>
+            </div>
+
+            <!-- 标题区 -->
+            <div class="hero-section">
+                <div class="hero-icon">🎯</div>
+                <h1 class="hero-title">解决方案</h1>
+                <p class="hero-subtitle">40个创新原理 · 智能匹配最佳方案</p>
+            </div>
+
+            <!-- 解决方案卡片 -->
+            <div class="solution-card">
+                <div class="solution-header">
+                    <div class="solution-rank">
+                        <div class="rank-badge">1</div>
+                        <div class="solution-title">分割原理</div>
+                    </div>
+                    <div class="solution-score">匹配度 95%</div>
+                </div>
+
+                <div class="solution-content">
+                    将问题中的对象分解成独立的模块或部分，使每个部分都能独立运作。<br><br>
+                    💡 <strong>具体建议：</strong>将"选择"这个大决定拆分成多个小决策，每个小决策单独评估，降低整体焦虑感。
+                </div>
+
+                <div class="solution-principle">
+                    <span>📖</span>
+                    <span class="principle-label">创新原理 #1 - 分割</span>
+                    <span class="principle-name">Segment</span>
+                </div>
+            </div>
+
+            <div class="solution-card">
+                <div class="solution-header">
+                    <div class="solution-rank">
+                        <div class="rank-badge" style="background: linear-gradient(135deg, #E0E0E0, #BDBDBD);">2</div>
+                        <div class="solution-title">抽取原理</div>
+                    </div>
+                    <div class="solution-score">匹配度 88%</div>
+                </div>
+
+                <div class="solution-content">
+                    从对象中提取出必要的特性或部件，去除不必要的部分。<br><br>
+                    💡 <strong>具体建议：</strong>提炼出"选择"中最核心的1-2个标准，忽略次要因素，简化决策过程。
+                </div>
+
+                <div class="solution-principle">
+                    <span>📖</span>
+                    <span class="principle-label">创新原理 #2 - 抽取</span>
+                    <span class="principle-name">Extraction</span>
+                </div>
+            </div>
+
+            <div class="solution-card">
+                <div class="solution-header">
+                    <div class="solution-rank">
+                        <div class="rank-badge" style="background: linear-gradient(135deg, #D4A574, #C4956A);">3</div>
+                        <div class="solution-title">不对称原理</div>
+                    </div>
+                    <div class="solution-score">匹配度 82%</div>
+                </div>
+
+                <div class="solution-content">
+                    将对称的形式改为不对称的形式，改变对象的结构或环境。<br><br>
+                    💡 <strong>具体建议：</strong>给自己设定"足够好"的标准，而不是追求"完美"选择，打破非此即彼的思维定式。
+                </div>
+
+                <div class="solution-principle">
+                    <span>📖</span>
+                    <span class="principle-label">创新原理 #3 - 不对称</span>
+                    <span class="principle-name">Asymmetry</span>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="cartoon-btn cartoon-btn-outline" onclick="goToPage(2)">← 返回</button>
+                <button class="cartoon-btn cartoon-btn-primary cartoon-btn-lg" onclick="finishAnalysis()">✨ 完成分析</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="goToPage(1)">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">首页</span>
+        </div>
+        <div class="nav-item" onclick="goToPage(2)">
+            <span class="nav-icon">⚖️</span>
+            <span class="nav-label">矛盾</span>
+        </div>
+        <div class="nav-item" onclick="goToPage(3)">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-label">方案</span>
+        </div>
+    </div>
+
+    <!-- 底部占位 -->
+    <div class="bottom-placeholder"></div>
+
+    <script>
+        // 页面切换功能
+        function goToPage(pageNum) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // 显示目标页面
+            document.getElementById('page-' + (pageNum === 1 ? 'home' : pageNum === 2 ? 'conflict' : 'solution')).classList.add('active');
+
+            // 更新底部导航状态
+            document.querySelectorAll('.nav-item').forEach((item, index) => {
+                item.classList.toggle('active', index === pageNum - 1);
+            });
+
+            // 更新步骤指示器（简化处理）
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 矛盾卡片选择
+        function selectConflict(element) {
+            document.querySelectorAll('.conflict-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+
+            // 点击反馈动画
+            element.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                element.style.transform = '';
+            }, 150);
+        }
+
+        // AI填充功能
+        function aiFill() {
+            const textarea = document.querySelector('.question-input');
+            textarea.value = '我最近在职业选择上很纠结。一方面想追求自己热爱的事业（创意类工作），另一方面又担心收入不稳定，想要一份稳定的工作（比如考公务员）。父母也希望我回老家发展，但我又舍不得大城市的机会。这种选择让我很焦虑，每天都在反复权衡...';
+            textarea.focus();
+
+            // 闪烁动画提示
+            textarea.style.animation = 'pop 0.3s ease-out';
+            setTimeout(() => {
+                textarea.style.animation = '';
+            }, 300);
+        }
+
+        // 完成分析
+        function finishAnalysis() {
+            alert('🎉 分析完成！\n\n已将你的解决方案保存到知识库中。\\n\n💡 提示：定期回顾这些方案，它们会根据你的反馈不断优化哦！');
+        }
+
+        // 主题切换（预留扩展）
+        function switchTheme(theme) {
+            document.querySelectorAll('.theme-dot').forEach(dot => {
+                dot.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // 这里可以扩展不同主题的切换逻辑
+            console.log('切换到主题:', theme);
+        }
+
+        // 卡片点击效果
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'translateY(-12rpx) rotate(-2deg)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 300);
+            });
+        });
+
+        // 按钮波纹效果
+        document.querySelectorAll('.cartoon-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.style.cssText = `
+                    position: absolute;
+                    background: rgba(255,255,255,0.4);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+                ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // 添加波纹动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 九宫格格子点击效果
+        document.querySelectorAll('.grid-cell').forEach(cell => {
+            cell.addEventListener('click', function() {
+                if (!this.classList.contains('center')) {
+                    this.classList.toggle('filled');
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                }
+            });
+        });
+
+        console.log('✅ 蜡笔小新风格页面已加载');
+        console.log('当前主题: 卡通风 (Crayon Shin-chan Style)');
+        console.log('功能: 点击底部导航切换页面，点击卡片有交互效果');
+    </script>
+</body>
+</html>

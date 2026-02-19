@@ -1,0 +1,120 @@
+<view class="container {{themeClass}}">
+  <view class="header">
+    <view class="user-info">
+      <view class="avatar">👤</view>
+      <text class="username">我的九宫格</text>
+      <text class="count">共 {{savedGrids.length}} 个</text>
+    </view>
+
+    <view class="header-actions">
+      <button class="version-toggle" bindtap="switchVersion" data-type="professional">
+        <text class="version-emoji">🔧</text>
+        <text class="version-text">专业</text>
+        <text class="version-check {{version === 'professional' ? 'active' : ''}}">✓</text>
+      </button>
+      <button class="version-toggle" bindtap="switchVersion" data-type="lifestyle">
+        <text class="version-emoji">🎨</text>
+        <text class="version-text">生活</text>
+        <text class="version-check {{version === 'lifestyle' ? 'active' : ''}}">✓</text>
+      </button>
+      <button class="theme-toggle" bindtap="toggleTheme">
+        <text class="theme-icon">🎨</text>
+        <text class="theme-text">{{themeName}}</text>
+      </button>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="section-title">已保存的九宫格</view>
+
+    <view class="grid-list" wx:if="{{savedGrids.length > 0}}">
+      <view
+        class="grid-item {{expandedIndex === index ? 'expanded' : ''}}"
+        wx:for="{{savedGrids}}"
+        wx:key="id"
+      >
+        <view class="grid-header">
+          <view class="grid-main" bindtap="toggleExpand" data-index="{{index}}">
+            <view class="grid-icon">📊</view>
+            <view class="grid-info">
+              <text class="grid-name">{{item.name}}</text>
+              <text class="grid-time">{{formatTimestamp(item.timestamp)}}</text>
+            </view>
+          </view>
+          <view class="grid-status">
+            <text class="expand-icon {{expandedIndex === index ? 'expanded' : ''}}">▼</text>
+          </view>
+        </view>
+
+        <view class="grid-body">
+          <text class="grid-desc">{{item.gridData.center || '暂无核心问题'}}</text>
+        </view>
+
+        <view class="grid-expanded-content" wx:if="{{expandedIndex === index}}">
+          <view class="expanded-section">
+            <text class="section-label">关联的解决方案 ({{item.solutions ? item.solutions.length : 0}})</text>
+            <view class="solutions-mini-list" wx:if="{{item.solutions && item.solutions.length > 0}}">
+              <view
+                class="solution-mini-item"
+                wx:for="{{item.solutions}}"
+                wx:key="id"
+                wx:for-item="sol"
+              >
+                <text class="solution-sol-conflict">{{sol.conflict}}</text>
+                <text class="solution-sol-time">{{sol.time}}</text>
+              </view>
+            </view>
+            <text class="empty-hint" wx:else>暂无关联的解决方案</text>
+          </view>
+
+          <view class="expanded-section" wx:if="{{item.conflicts && item.conflicts.length > 0}}">
+            <text class="section-label">矛盾分析矩阵 ({{item.conflicts.length}})</text>
+            <view class="conflicts-mini-list">
+              <text class="conflict-mini-item" wx:for="{{item.conflicts}}" wx:key="id">
+                {{item.id}}. {{item.name || item.title}} ({{item.cell1Name}} vs {{item.cell2Name}})
+              </text>
+            </view>
+          </view>
+        </view>
+
+        <view class="grid-footer">
+          <button
+            class="footer-btn view-btn"
+            bindtap="viewGrid"
+            data-index="{{index}}"
+          >
+            查看详情
+          </button>
+          <button
+            class="footer-btn edit-btn"
+            bindtap="editGridName"
+            data-index="{{index}}"
+          >
+            重命名
+          </button>
+          <button
+            class="footer-btn delete-btn"
+            bindtap="deleteGrid"
+            data-index="{{index}}"
+          >
+            删除
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">📦</text>
+      <text class="empty-text">还没有保存的九宫格</text>
+      <text class="empty-hint">完成问卷后保存，或导入已有九宫格</text>
+    </view>
+
+    <button
+      class="clear-btn"
+      wx:if="{{savedGrids.length > 0}}"
+      bindtap="clearAll"
+    >
+      清空全部
+    </button>
+  </view>
+</view>

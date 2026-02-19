@@ -1,0 +1,300 @@
+<view class="container {{themeClass}}">
+  <view class="header">
+    <view class="header-left">
+      <text class="title">{{pageTitle || '矛盾提取'}}</text>
+      <text class="subtitle" wx:if="{{apiStatus}}">{{apiStatus}}</text>
+    </view>
+    <view class="header-right">
+      <button class="save-btn" bindtap="saveConflicts">{{config.buttons.save}}</button>
+      <button class="next-btn" bindtap="nextStep">{{config.buttons.next}}</button>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="instructions" wx:if="{{openGuide}}">
+      <text class="inst-icon">💭</text>
+      <text class="inst-content">{{openGuide}}</text>
+    </view>
+    <view class="instructions" wx:else>
+      <text class="inst-title">📋 操作提示</text>
+      <text class="inst-content">• 点击相邻格子中间的按钮查看矛盾详情</text>
+      <text class="inst-content">• 颜色和形状表示矛盾的核心程度</text>
+      <text class="inst-content">• 点击保存按钮可保存矛盾数据供下次导入</text>
+    </view>
+    
+    <view class="grid-wrapper">
+      <view class="grid-container">
+        <!-- 过去行 -->
+        <view class="grid-row past-row">
+          <view class="grid-cell past-super {{emptyCells.pastSuper ? 'empty' : ''}}">
+            <text class="cell-title">过去的超系统</text>
+            <text class="cell-content">{{gridData.past.super}}</text>
+          </view>
+          <view
+            class="conflict-btn horizontal {{conflictMap[1] ? conflictMap[1].levelClass : ''}} {{disabledButtons.includes(1) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="1"
+            style="background-color: {{disabledButtons.includes(1) ? '#e9ecef' : (conflictMap[1] ? conflictMap[1].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[1] ? conflictMap[1].shapeClass : ''}}"></view>
+            <view class="ai-loading-spinner {{currentAnalyzingId === 1 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(1) && conflictMap[1] && !conflictMap[1].aiAnalyzed}}">⭐</view>
+          </view>
+          <view class="grid-cell past-system {{emptyCells.pastSystem ? 'empty' : ''}}">
+            <text class="cell-title">过去的系统</text>
+            <text class="cell-content">{{gridData.past.system}}</text>
+          </view>
+          <view
+            class="conflict-btn horizontal {{conflictMap[2] ? conflictMap[2].levelClass : ''}} {{disabledButtons.includes(2) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="2"
+            style="background-color: {{disabledButtons.includes(2) ? '#e9ecef' : (conflictMap[2] ? conflictMap[2].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[2] ? conflictMap[2].shapeClass : ''}}"></view>
+            <view class="ai-loading-spinner {{currentAnalyzingId === 2 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(2) && conflictMap[2] && !conflictMap[2].aiAnalyzed}}">⭐</view>
+          </view>
+          <view class="grid-cell past-sub {{emptyCells.pastSub ? 'empty' : ''}}">
+            <text class="cell-title">过去的子系统</text>
+            <text class="cell-content">{{gridData.past.sub}}</text>
+          </view>
+        </view>
+
+        <!-- 垂直矛盾按钮：过去行到当前行 -->
+        <view class="vertical-buttons-row">
+          <!-- 按钮7: 过去的超系统(1) vs 当前的超系统(4) -->
+          <view class="vertical-btn-wrapper">
+            <view
+              class="conflict-btn vertical {{conflictMap[7] ? conflictMap[7].levelClass : ''}} {{disabledButtons.includes(7) ? 'disabled' : ''}}"
+              bindtap="showConflict"
+              data-id="7"
+              style="background-color: {{disabledButtons.includes(7) ? '#e9ecef' : (conflictMap[7] ? conflictMap[7].bgColor : '#e9ecef')}}"
+            >
+              <view class="btn-indicator {{conflictMap[7] ? conflictMap[7].shapeClass : ''}}"></view>
+              <view class="ai-loading-spinner {{currentAnalyzingId === 7 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(7) && conflictMap[7] && !conflictMap[7].aiAnalyzed}}">⭐</view>
+            </view>
+          </view>
+          <view class="vertical-btn-center"></view>
+          <!-- 按钮9: 过去的系统(2) vs 核心问题(5) -->
+          <view class="vertical-btn-wrapper">
+            <view
+              class="conflict-btn vertical {{conflictMap[9] ? conflictMap[9].levelClass : ''}} {{disabledButtons.includes(9) ? 'disabled' : ''}}"
+              bindtap="showConflict"
+              data-id="9"
+              style="background-color: {{disabledButtons.includes(9) ? '#e9ecef' : (conflictMap[9] ? conflictMap[9].bgColor : '#e9ecef')}}"
+            >
+              <view class="btn-indicator {{conflictMap[9] ? conflictMap[9].shapeClass : ''}}"></view>
+              <view class="ai-loading-spinner {{currentAnalyzingId === 9 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(9) && conflictMap[9] && !conflictMap[9].aiAnalyzed}}">⭐</view>
+            </view>
+          </view>
+          <view class="vertical-btn-center"></view>
+          <!-- 按钮11: 过去的子系统(3) vs 当前的子系统(6) -->
+          <view class="vertical-btn-wrapper">
+            <view
+              class="conflict-btn vertical {{conflictMap[11] ? conflictMap[11].levelClass : ''}} {{disabledButtons.includes(11) ? 'disabled' : ''}}"
+              bindtap="showConflict"
+              data-id="11"
+              style="background-color: {{disabledButtons.includes(11) ? '#e9ecef' : (conflictMap[11] ? conflictMap[11].bgColor : '#e9ecef')}}"
+            >
+              <view class="btn-indicator {{conflictMap[11] ? conflictMap[11].shapeClass : ''}}"></view>
+              <view class="ai-loading-spinner {{currentAnalyzingId === 11 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(11) && conflictMap[11] && !conflictMap[11].aiAnalyzed}}">⭐</view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 当前行 -->
+        <view class="grid-row current-row">
+          <view class="grid-cell current-super {{emptyCells.currentSuper ? 'empty' : ''}}">
+            <text class="cell-title">当前的超系统</text>
+            <text class="cell-content">{{gridData.current.super}}</text>
+          </view>
+          <view
+            class="conflict-btn horizontal {{conflictMap[3] ? conflictMap[3].levelClass : ''}} {{disabledButtons.includes(3) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="3"
+            style="background-color: {{disabledButtons.includes(3) ? '#e9ecef' : (conflictMap[3] ? conflictMap[3].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[3] ? conflictMap[3].shapeClass : ''}}"></view>
+            <view class="ai-loading-spinner {{currentAnalyzingId === 3 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(3) && conflictMap[3] && !conflictMap[3].aiAnalyzed}}">⭐</view>
+          </view>
+          <view class="grid-cell center {{emptyCells.center ? 'empty' : ''}}">
+            <text class="cell-title">核心问题</text>
+            <text class="cell-content">{{gridData.center}}</text>
+          </view>
+          <view
+            class="conflict-btn horizontal {{conflictMap[4] ? conflictMap[4].levelClass : ''}} {{disabledButtons.includes(4) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="4"
+            style="background-color: {{disabledButtons.includes(4) ? '#e9ecef' : (conflictMap[4] ? conflictMap[4].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[4] ? conflictMap[4].shapeClass : ''}}"></view>
+            <view class="ai-loading-spinner {{currentAnalyzingId === 4 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(4) && conflictMap[4] && !conflictMap[4].aiAnalyzed}}">⭐</view>
+          </view>
+          <view class="grid-cell current-sub {{emptyCells.currentSub ? 'empty' : ''}}">
+            <text class="cell-title">当前的子系统</text>
+            <text class="cell-content">{{gridData.current.sub}}</text>
+          </view>
+        </view>
+
+        <!-- 垂直矛盾按钮：当前行到未来行 -->
+        <view class="vertical-buttons-row">
+          <!-- 按钮8: 当前的超系统(4) vs 未来的超系统(7) -->
+          <view class="vertical-btn-wrapper">
+            <view
+              class="conflict-btn vertical {{conflictMap[8] ? conflictMap[8].levelClass : ''}} {{disabledButtons.includes(8) ? 'disabled' : ''}}"
+              bindtap="showConflict"
+              data-id="8"
+              style="background-color: {{disabledButtons.includes(8) ? '#e9ecef' : (conflictMap[8] ? conflictMap[8].bgColor : '#e9ecef')}}"
+            >
+              <view class="btn-indicator {{conflictMap[8] ? conflictMap[8].shapeClass : ''}}"></view>
+              <view class="ai-loading-spinner {{currentAnalyzingId === 8 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(8) && conflictMap[8] && !conflictMap[8].aiAnalyzed}}">⭐</view>
+            </view>
+          </view>
+          <view class="vertical-btn-center"></view>
+          <!-- 按钮10: 核心问题(5) vs 未来的系统(8) -->
+          <view class="vertical-btn-wrapper">
+            <view
+              class="conflict-btn vertical {{conflictMap[10] ? conflictMap[10].levelClass : ''}} {{disabledButtons.includes(10) ? 'disabled' : ''}}"
+              bindtap="showConflict"
+              data-id="10"
+              style="background-color: {{disabledButtons.includes(10) ? '#e9ecef' : (conflictMap[10] ? conflictMap[10].bgColor : '#e9ecef')}}"
+            >
+              <view class="btn-indicator {{conflictMap[10] ? conflictMap[10].shapeClass : ''}}"></view>
+              <view class="ai-loading-spinner {{currentAnalyzingId === 10 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(10) && conflictMap[10] && !conflictMap[10].aiAnalyzed}}">⭐</view>
+            </view>
+          </view>
+          <view class="vertical-btn-center"></view>
+          <!-- 按钮12: 当前的子系统(6) vs 未来的子系统(9) -->
+          <view class="vertical-btn-wrapper">
+            <view
+              class="conflict-btn vertical {{conflictMap[12] ? conflictMap[12].levelClass : ''}} {{disabledButtons.includes(12) ? 'disabled' : ''}}"
+              bindtap="showConflict"
+              data-id="12"
+              style="background-color: {{disabledButtons.includes(12) ? '#e9ecef' : (conflictMap[12] ? conflictMap[12].bgColor : '#e9ecef')}}"
+            >
+              <view class="btn-indicator {{conflictMap[12] ? conflictMap[12].shapeClass : ''}}"></view>
+              <view class="ai-loading-spinner {{currentAnalyzingId === 12 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(12) && conflictMap[12] && !conflictMap[12].aiAnalyzed}}">⭐</view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 未来行 -->
+        <view class="grid-row future-row">
+          <view class="grid-cell future-super {{emptyCells.futureSuper ? 'empty' : ''}}">
+            <text class="cell-title">未来的超系统</text>
+            <text class="cell-content">{{gridData.future.super}}</text>
+          </view>
+          <view
+            class="conflict-btn horizontal {{conflictMap[5] ? conflictMap[5].levelClass : ''}} {{disabledButtons.includes(5) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="5"
+            style="background-color: {{disabledButtons.includes(5) ? '#e9ecef' : (conflictMap[5] ? conflictMap[5].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[5] ? conflictMap[5].shapeClass : ''}}"></view>
+            <view class="ai-loading-spinner {{currentAnalyzingId === 5 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(5) && conflictMap[5] && !conflictMap[5].aiAnalyzed}}">⭐</view>
+          </view>
+          <view class="grid-cell future-system {{emptyCells.futureSystem ? 'empty' : ''}}">
+            <text class="cell-title">未来的系统</text>
+            <text class="cell-content">{{gridData.future.system}}</text>
+          </view>
+          <view
+            class="conflict-btn horizontal {{conflictMap[6] ? conflictMap[6].levelClass : ''}} {{disabledButtons.includes(6) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="6"
+            style="background-color: {{disabledButtons.includes(6) ? '#e9ecef' : (conflictMap[6] ? conflictMap[6].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[6] ? conflictMap[6].shapeClass : ''}}"></view>
+            <view class="ai-loading-spinner {{currentAnalyzingId === 6 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(6) && conflictMap[6] && !conflictMap[6].aiAnalyzed}}">⭐</view>
+          </view>
+          <view class="grid-cell future-sub {{emptyCells.futureSub ? 'empty' : ''}}">
+            <text class="cell-title">未来的子系统</text>
+            <text class="cell-content">{{gridData.future.sub}}</text>
+          </view>
+        </view>
+
+        <!-- 对角线矛盾按钮 -->
+        <view class="diagonal-buttons">
+          <!-- 按钮13: 过去的超系统(1) -> 核心问题(5) - 左上角区域 -->
+          <view
+            class="conflict-btn diagonal top-left {{conflictMap[13] ? conflictMap[13].levelClass : ''}} {{disabledButtons.includes(13) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="13"
+            style="background-color: {{disabledButtons.includes(13) ? '#e9ecef' : (conflictMap[13] ? conflictMap[13].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[13] ? conflictMap[13].shapeClass : ''}}"></view>
+            <!-- AI分析加载动画 -->
+            <view class="ai-loading-spinner {{currentAnalyzingId === 13 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(13) && conflictMap[13] && !conflictMap[13].aiAnalyzed}}">⭐</view>
+          </view>
+          <!-- 按钮14: 核心问题(5) -> 未来的子系统(9) - 右上角区域 -->
+          <view
+            class="conflict-btn diagonal top-right {{conflictMap[14] ? conflictMap[14].levelClass : ''}} {{disabledButtons.includes(14) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="14"
+            style="background-color: {{disabledButtons.includes(14) ? '#e9ecef' : (conflictMap[14] ? conflictMap[14].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[14] ? conflictMap[14].shapeClass : ''}}"></view>
+            <view class="ai-loading-spinner {{currentAnalyzingId === 14 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(14) && conflictMap[14] && !conflictMap[14].aiAnalyzed}}">⭐</view>
+          </view>
+          <!-- 按钮15: 过去的子系统(3) -> 核心问题(5) - 左下角区域 -->
+          <view
+            class="conflict-btn diagonal bottom-left {{conflictMap[15] ? conflictMap[15].levelClass : ''}} {{disabledButtons.includes(15) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="15"
+            style="background-color: {{disabledButtons.includes(15) ? '#e9ecef' : (conflictMap[15] ? conflictMap[15].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[15] ? conflictMap[15].shapeClass : ''}}"></view>
+            <view class="ai-loading-spinner {{currentAnalyzingId === 15 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(15) && conflictMap[15] && !conflictMap[15].aiAnalyzed}}">⭐</view>
+          </view>
+          <!-- 按钮16: 核心问题(5) -> 未来的超系统(7) - 右下角区域 -->
+          <view
+            class="conflict-btn diagonal bottom-right {{conflictMap[16] ? conflictMap[16].levelClass : ''}} {{disabledButtons.includes(16) ? 'disabled' : ''}}"
+            bindtap="showConflict"
+            data-id="16"
+            style="background-color: {{disabledButtons.includes(16) ? '#e9ecef' : (conflictMap[16] ? conflictMap[16].bgColor : '#e9ecef')}}"
+          >
+            <view class="btn-indicator {{conflictMap[16] ? conflictMap[16].shapeClass : ''}}"></view>
+            <view class="ai-loading-spinner {{currentAnalyzingId === 16 ? 'rotating' : ''}}" wx:if="{{!disabledButtons.includes(16) && conflictMap[16] && !conflictMap[16].aiAnalyzed}}">⭐</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 矛盾详情弹窗 -->
+  <view class="modal" wx:if="{{showModal}}" bindtap="hideModal">
+    <view class="modal-mask"></view>
+    <view class="modal-content" catchtap="">
+      <view class="modal-header">
+        <view class="conflict-badge">⚡ 矛盾 {{currentConflict ? currentConflict.id : ''}}</view>
+        <view class="modal-close" bindtap="hideModal">✕</view>
+      </view>
+      <view class="modal-body">
+        <view class="modal-title-row">
+          <text class="modal-cell-name">{{currentConflict.cell1Name}}</text>
+          <text class="modal-vs">VS</text>
+          <text class="modal-cell-name">{{currentConflict.cell2Name}}</text>
+        </view>
+
+        <!-- AI分析中提示 -->
+        <view wx:if="{{aiLoading && currentConflict && !currentConflict.aiAnalyzed}}" class="ai-analyzing">
+          <view class="spinner">⭐</view>
+          <text class="analyzing-text">AI正在分析中...</text>
+        </view>
+
+        <!-- 已分析徽章 -->
+        <view wx:elif="{{currentConflict && currentConflict.aiAnalyzed}}" class="ai-badge">✓ AI已分析</view>
+
+        <text class="modal-conflict-title" wx:if="{{currentConflict.title}}">{{currentConflict.title}}</text>
+
+        <text class="modal-description" wx:if="{{currentConflict.description}}">{{currentConflict.description}}</text>
+        
+        <view class="core-level-badge">
+          <text class="level-label">核心程度</text>
+          <view class="level-stars">
+            <text wx:for="{{[1,2,3,4,5]}}" 
+                  wx:key="*this" 
+                  class="star {{item <= currentConflict.coreLevel ? 'filled' : ''}}">★</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,197 @@
+<view class="container {{themeClass}}">
+  <view class="progress-bar">
+    <view class="progress-fill" style="width: {{currentQuestion / 9 * 100}}%"></view>
+  </view>
+
+  <view class="header">
+    <view class="header-left">
+      <text class="title">{{config.pageTitles.questionnaire}}</text>
+      <text class="progress-text">{{progressText}}</text>
+    </view>
+
+    <view class="header-right">
+      <button class="action-btn import-btn" bindtap="importGrid">
+        <text class="action-icon">📥</text>
+        <text class="action-text">{{config.buttons.import}}</text>
+      </button>
+      <button class="action-btn save-grid-btn" bindtap="saveGridWithName">
+        <text class="action-icon">💾</text>
+        <text class="action-text">{{config.buttons.save}}</text>
+      </button>
+    </view>
+  </view>
+
+   <!-- 场景一：AI自动填写（长文本输入驱动） -->
+   <view class="ai-input-overlay" wx:if="{{showAiInput}}" bindtap="cancelAiInput">
+     <view class="ai-input-section" catchtap="true">
+       <text class="ai-input-title">输入您的现状描述</text>
+       <text class="ai-input-subtitle">请详细描述您当前面临的问题，可涵盖与过去、现在、未来相关的环境、事件或感受。</text>
+       <textarea
+         class="ai-input-area"
+         placeholder="{{config.placeholders.aiInput}}"
+         value="{{aiInputText}}"
+         bindinput="onAiInput"
+         bindconfirm="submitAiInput"
+         maxlength="2000"
+         auto-focus
+       ></textarea>
+       <view class="ai-input-footer">
+         <text class="ai-input-count">{{aiInputText.length}} / 2000</text>
+         <button class="ai-submit-btn" bindtap="submitAiInput" style="{{aiInputText.length >= 50 ? '' : 'opacity:0.5'}}">AI解析填充</button>
+       </view>
+     </view>
+   </view>
+
+  <view class="content" wx:else>
+    <!-- 场景二：手动填写时的智能引导 -->
+    <!-- 第一题显示固定引导语 -->
+    <view class="question-title-section" wx:if="{{currentQuestion === 1}}">
+      <text class="question-title">{{config.firstQuestionGuide}}</text>
+    </view>
+    <!-- 第2-9题显示AI生成的提示作为标题 -->
+    <view class="question-title-section" wx:elif="{{currentQuestion > 1 && currentQuestionData.hint}}">
+      <text class="question-title">{{currentQuestionData.hint}}</text>
+    </view>
+
+    <!-- 问题卡片 -->
+    <view class="question-card">
+      <text class="question-text">{{currentQuestionData.text}}</text>
+
+      <textarea
+        class="answer-input"
+        placeholder="{{config.placeholders.answer}}"
+        value="{{answers[currentQuestion-1]}}"
+        bindinput="onAnswerInput"
+        auto-height
+        maxlength="500"
+      ></textarea>
+      <text class="char-count">{{answers[currentQuestion-1].length}} / 500</text>
+    </view>
+
+    <!-- AI帮你填按钮（仅在当前题未填写时显示） -->
+    <view class="ai-fill-section" wx:if="{{!answers[currentQuestion-1]}}">
+      <view class="ai-fill-btn" bindtap="startAutoAnalysis">
+        <text class="ai-fill-icon">✨</text>
+        <text class="ai-fill-text">{{config.buttons.analyze}}</text>
+      </view>
+      <text class="ai-fill-desc">输入一段描述，让AI帮你填满九宫格</text>
+    </view>
+
+    <!-- 导航按钮 -->
+    <view class="nav-buttons">
+      <button
+        class="nav-btn prev-btn"
+        bindtap="prevQuestion"
+        disabled="{{currentQuestion === 1}}"
+      >
+        <text class="btn-icon">←</text>
+        <text class="btn-text">上一题</text>
+      </button>
+       <button
+         class="nav-btn next-btn"
+         bindtap="nextQuestion"
+         disabled="{{!answers[currentQuestion-1]}}"
+       >
+         <text class="btn-text">{{currentQuestion === 9 ? '查看矛盾' : '下一题'}}</text>
+         <text class="btn-icon">→</text>
+       </button>
+    </view>
+
+    <!-- 查看矛盾按钮 -->
+    <view class="view-conflicts-center">
+      <button class="view-conflicts-btn" bindtap="viewConflictsFromCenter">
+        <text class="center-btn-icon">⚡</text>
+        <text class="center-btn-text">查看矛盾</text>
+        <text class="center-btn-desc">分析技术矛盾</text>
+      </button>
+    </view>
+
+    <!-- 九宫格预览 -->
+    <view class="nine-grid-preview">
+      <view class="grid-preview-title">九宫格预览</view>
+      <view class="grid-preview-container">
+        <view class="grid-row">
+          <view
+            class="grid-cell {{answers[1] ? 'filled' : ''}} {{currentQuestion === 2 ? 'active' : ''}}"
+            bindtap="jumpToQuestion"
+            data-index="1"
+          >
+            <text class="grid-cell-label">过去的超系统</text>
+            <text wx:if="{{answers[1]}}" class="grid-cell-status">✓</text>
+          </view>
+          <view
+            class="grid-cell {{answers[2] ? 'filled' : ''}} {{currentQuestion === 3 ? 'active' : ''}}"
+            bindtap="jumpToQuestion"
+            data-index="2"
+          >
+            <text class="grid-cell-label">过去的系统</text>
+            <text wx:if="{{answers[2]}}" class="grid-cell-status">✓</text>
+          </view>
+          <view
+            class="grid-cell {{answers[3] ? 'filled' : ''}} {{currentQuestion === 4 ? 'active' : ''}}"
+            bindtap="jumpToQuestion"
+            data-index="3"
+          >
+            <text class="grid-cell-label">过去的子系统</text>
+            <text wx:if="{{answers[3]}}" class="grid-cell-status">✓</text>
+          </view>
+        </view>
+
+        <view class="grid-row">
+          <view
+            class="grid-cell {{answers[4] ? 'filled' : ''}} {{currentQuestion === 5 ? 'active' : ''}}"
+            bindtap="jumpToQuestion"
+            data-index="4"
+          >
+            <text class="grid-cell-label">当前的超系统</text>
+            <text wx:if="{{answers[4]}}" class="grid-cell-status">✓</text>
+          </view>
+          <view
+            class="grid-cell center-cell {{answers[0] ? 'center-filled' : ''}} {{currentQuestion === 1 ? 'active' : ''}}"
+            bindtap="jumpToQuestion"
+            data-index="0"
+          >
+            <text class="grid-cell-label">核心问题</text>
+            <text wx:if="{{answers[0]}}" class="grid-cell-status">✓</text>
+          </view>
+          <view
+            class="grid-cell {{answers[5] ? 'filled' : ''}} {{currentQuestion === 6 ? 'active' : ''}}"
+            bindtap="jumpToQuestion"
+            data-index="5"
+          >
+            <text class="grid-cell-label">当前的子系统</text>
+            <text wx:if="{{answers[5]}}" class="grid-cell-status">✓</text>
+          </view>
+        </view>
+
+        <view class="grid-row">
+          <view
+            class="grid-cell {{answers[6] ? 'filled' : ''}} {{currentQuestion === 7 ? 'active' : ''}}"
+            bindtap="jumpToQuestion"
+            data-index="6"
+          >
+            <text class="grid-cell-label">未来的超系统</text>
+            <text wx:if="{{answers[6]}}" class="grid-cell-status">✓</text>
+          </view>
+          <view
+            class="grid-cell {{answers[7] ? 'filled' : ''}} {{currentQuestion === 8 ? 'active' : ''}}"
+            bindtap="jumpToQuestion"
+            data-index="7"
+          >
+            <text class="grid-cell-label">未来的系统</text>
+            <text wx:if="{{answers[7]}}" class="grid-cell-status">✓</text>
+          </view>
+          <view
+            class="grid-cell {{answers[8] ? 'filled' : ''}} {{currentQuestion === 9 ? 'active' : ''}}"
+            bindtap="jumpToQuestion"
+            data-index="8"
+          >
+            <text class="grid-cell-label">未来的子系统</text>
+            <text wx:if="{{answers[8]}}" class="grid-cell-status">✓</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

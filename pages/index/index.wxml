@@ -1,0 +1,55 @@
+<view class="container {{themeClass}}">
+  <view class="header">
+    <text class="logo">🧠</text>
+    <text class="title">TRIZ答案之书</text>
+    <text class="subtitle">智能结构化 · 创新解决方案</text>
+  </view>
+  
+  <view class="content">
+    <view class="btn-section">
+      <button class="start-btn" bindtap="startQuestionnaire">开始分析</button>
+    </view>
+
+    <view class="feature-section">
+      <text class="section-title">核心功能</text>
+      <view class="feature-list">
+        <view class="feature-item">
+          <view class="feature-icon">1</view>
+          <view class="feature-text">
+            <text class="feature-title">九宫格结构化描述</text>
+            <text class="feature-desc">AI引导式问卷，智能挖掘问题背景</text>
+          </view>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">2</view>
+          <view class="feature-text">
+            <text class="feature-title">矛盾自动提取与可视化</text>
+            <text class="feature-desc">自动识别16组技术矛盾，交互式呈现</text>
+          </view>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">3</view>
+          <view class="feature-text">
+            <text class="feature-title">原理智能推荐与方案生成</text>
+            <text class="feature-desc">40个TRIZ原理，AI智能匹配</text>
+          </view>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">4</view>
+          <view class="feature-text">
+            <text class="feature-title">知识库自学习优化</text>
+            <text class="feature-desc">用户反馈驱动，系统越用越智能</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="footer">
+    <view class="footer-links">
+      <text class="footer-text">TRIZ答案之书 © 2026</text>
+      <text class="footer-divider">|</text>
+      <navigator url="/pages/about/about" class="footer-link">关于</navigator>
+    </view>
+  </view>
+</view>

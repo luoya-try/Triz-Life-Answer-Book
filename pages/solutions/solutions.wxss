@@ -1,0 +1,1127 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30rpx 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(102, 126, 234, 0.3);
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 20rpx;
+  opacity: 0.9;
+  font-weight: 300;
+  letter-spacing: 1rpx;
+}
+
+.content {
+  flex: 1;
+  padding: 25rpx;
+  padding-bottom: 50rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 25rpx;
+}
+
+.opening-guide {
+  background: linear-gradient(135deg, #fff7e6 0%, #ffe8cc 100%);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 25rpx;
+  border-left: 6rpx solid #ff9a56;
+}
+
+.guide-text {
+  font-size: 24rpx;
+  color: #2c3e50;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.section {
+  background-color: white;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 6rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  margin-bottom: 25rpx;
+  position: relative;
+}
+
+.section-number {
+  width: 50rpx;
+  height: 50rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  font-weight: bold;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  flex: 1;
+}
+
+.recommend-badge {
+  background: linear-gradient(135deg, #ffd43b 0%, #fab005 100%);
+  color: #e67700;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 18rpx;
+  font-weight: bold;
+}
+
+.solution-count {
+  background: linear-gradient(135deg, #ff922b 0%, #ff6b6b 100%);
+  color: white;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 18rpx;
+  font-weight: bold;
+}
+
+/* 选择器样式 */
+.picker-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25rpx;
+  background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%);
+  border-radius: 20rpx;
+  border: 2rpx solid #74c0fc;
+  transition: all 0.3s ease;
+  box-shadow: 0 4rpx 12rpx rgba(102, 126, 234, 0.1);
+}
+
+.picker-container:active {
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 6rpx rgba(102, 126, 234, 0.1);
+  transform: scale(0.98);
+}
+
+.picker-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #1971c2;
+  font-weight: 600;
+}
+
+.picker-text.placeholder {
+  color: #adb5bd;
+  font-weight: 400;
+}
+
+.picker-arrow {
+  font-size: 24rpx;
+  color: #667eea;
+  margin-left: 15rpx;
+}
+
+/* 矛盾对复选框列表 */
+.conflict-checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.conflict-checkbox-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15rpx;
+  padding: 20rpx;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 16rpx;
+  border: 2rpx solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+.conflict-checkbox-item.checked {
+  background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%);
+  border-color: #74c0fc;
+}
+
+.conflict-checkbox-item checkbox,
+.conflict-checkbox-item radio {
+  margin-top: 5rpx;
+}
+
+.conflict-checkbox-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.conflict-name {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.conflict-brief {
+  font-size: 20rpx;
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+/* 矛盾对详情 */
+.conflict-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  padding: 25rpx;
+  margin-top: 20rpx;
+  background: linear-gradient(135deg, #fff4e6 0%, #ffd8a8 100%);
+  border-radius: 16rpx;
+  border-left: 6rpx solid #fab005;
+}
+
+.conflict-label {
+  font-size: 20rpx;
+  color: #e67700;
+  font-weight: bold;
+}
+
+.conflict-description {
+  font-size: 24rpx;
+  color: #495057;
+  line-height: 1.6;
+}
+
+/* 原理标签切换 */
+.principle-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.principle-tag {
+  padding: 10rpx 20rpx;
+  background-color: #f8f9fa;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  color: #6c757d;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2rpx solid transparent;
+}
+
+.principle-tag.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+}
+
+/* 推荐原理卡片 */
+.recommended-principles {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15rpx;
+}
+
+.principle-card {
+  padding: 25rpx;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 16rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.principle-card:active {
+  transform: scale(0.98);
+}
+
+.principle-card.recommended {
+  background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%);
+  border-color: #74c0fc;
+}
+
+.principle-card.selected {
+  background: linear-gradient(135deg, #b19cd9 0%, #9775fa 100%);
+  border-color: #7048e8;
+  box-shadow: 0 4rpx 12rpx rgba(112, 72, 232, 0.3);
+  transform: translateY(-2rpx);
+}
+
+.principle-card.selected .principle-id {
+  background-color: white;
+  color: #7048e8;
+}
+
+.principle-card.selected .principle-name {
+  color: white;
+}
+
+.principle-card.selected .principle-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.principle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.principle-id {
+  width: 45rpx;
+  height: 45rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  font-weight: bold;
+}
+
+.principle-name {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.principle-desc {
+  font-size: 18rpx;
+  color: #6c757d;
+  line-height: 1.4;
+  display: block;
+}
+
+.principle-card.small .principle-name {
+  font-size: 22rpx;
+  margin-bottom: 6rpx;
+}
+
+.principle-card.small .principle-desc {
+  font-size: 16rpx;
+}
+
+.checkbox {
+  width: 38rpx;
+  height: 38rpx;
+  border: 2rpx solid #dee2e6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  font-weight: bold;
+  color: #adb5bd;
+  background-color: #f8f9fa;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform: scale(1);
+}
+
+.checkbox text {
+  color: white;
+  display: none;
+}
+
+.checkbox.checked {
+  background: linear-gradient(135deg, #51cf66 0%, #37b24d 100%);
+  border-color: #37b24d;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4rpx 12rpx rgba(55, 178, 77, 0.4);
+}
+
+.checkbox.checked text {
+  display: block;
+}
+
+/* 已选原理展示 */
+.selected-principles {
+  background: linear-gradient(135deg, #fff4e6 0%, #ffe8cc 100%);
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.selected-label {
+  font-size: 20rpx;
+  font-weight: bold;
+  color: #e67700;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.selected-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.selected-chip {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  border: 1rpx solid #ffe8cc;
+}
+
+.chip-id {
+  width: 30rpx;
+  height: 30rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16rpx;
+  font-weight: bold;
+}
+
+.chip-name {
+  font-size: 18rpx;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.chip-remove {
+  font-size: 28rpx;
+  color: #ff6b6b;
+  font-weight: bold;
+  margin-left: 8rpx;
+  width: 32rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffe8e8 0%, #ffc9c9 100%);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.selected-chip:active {
+  transform: scale(0.95);
+}
+
+.chip-remove:active {
+  transform: scale(0.8);
+}
+
+/* 解决方案输入 */
+.solution-wrapper {
+  position: relative;
+}
+
+.solution-scroll {
+  width: 100%;
+  height: 500rpx;
+  max-height: 800rpx;
+  padding: 25rpx;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 16rpx;
+  border: 2rpx solid #dee2e6;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.solution-display {
+  width: 100%;
+  font-size: 24rpx;
+  color: #2c3e50;
+  line-height: 1.6;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.generating-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  padding: 25rpx;
+  background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%);
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.status-icon {
+  font-size: 28rpx;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.status-text {
+  font-size: 20rpx;
+  color: #1971c2;
+  font-weight: 500;
+}
+
+/* 按钮样式 */
+.solution-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.generate-btn, .save-btn {
+  flex: 1;
+  height: 80rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  transition: all 0.3s ease;
+}
+
+.generate-btn, .save-btn::after {
+  
+}
+
+.generate-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 6rpx 20rpx rgba(102, 126, 234, 0.4);
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #51cf66 0%, #37b24d 100%);
+  color: white;
+  box-shadow: 0 6rpx 20rpx rgba(55, 178, 77, 0.4);
+}
+
+.btn-hover {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+/* 编辑弹窗 */
+.edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+}
+
+.edit-modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10rpx);
+}
+
+.edit-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 24rpx;
+  width: 85%;
+  max-height: 80vh;
+  box-shadow: 0 12rpx 40rpx rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.edit-modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-modal-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: white;
+}
+
+.edit-modal-close {
+  font-size: 32rpx;
+  color: white;
+  width: 50rpx;
+  height: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-textarea {
+  width: 100%;
+  padding: 30rpx;
+  min-height: 500rpx;
+  border: 2rpx solid #dee2e6;
+  box-sizing: border-box;
+  
+  background: #f8f9fa;
+}
+
+.edit-modal-footer {
+  padding: 25rpx;
+  display: flex;
+  gap: 20rpx;
+  border-top: 1rpx solid #dee2e6;
+}
+
+.edit-cancel-btn,
+.edit-confirm-btn {
+  flex: 1;
+  height: 70rpx;
+  border-radius: 35rpx;
+  
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.edit-cancel-btn {
+  background: #dee2e6;
+  color: #6c757d;
+}
+
+.edit-confirm-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* 已保存的解决方案 */
+.solutions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.solution-card {
+  border-radius: 20rpx;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  border: 2rpx solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+.solution-card.expanded {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-color: #667eea;
+}
+
+.solution-card-header {
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15rpx;
+}
+
+.solution-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.solution-conflict {
+  font-size: 22rpx;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.solution-meta {
+  font-size: 16rpx;
+  color: #adb5bd;
+}
+
+.action-btn {
+  height: 55rpx;
+  padding: 0 25rpx;
+  background: linear-gradient(135deg, #ff8787 0%, #ff6b6b 100%);
+  color: white;
+  font-size: 20rpx;
+  border-radius: 28rpx;
+  
+}
+
+.action-btn::after {
+  
+}
+
+.action-hover {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+.solution-card-body {
+  padding: 0 20rpx 20rpx;
+}
+
+.solution-principles {
+  margin-bottom: 15rpx;
+}
+
+.principles-label {
+  font-size: 18rpx;
+  color: #6c757d;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.principles-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+.principle-chip {
+  padding: 6rpx 12rpx;
+  background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%);
+  color: #1971c2;
+  border-radius: 12rpx;
+  font-size: 16rpx;
+}
+
+.solution-content {
+  font-size: 20rpx;
+  color: #495057;
+  line-height: 1.7;
+  display: block;
+  padding: 15rpx;
+  background-color: white;
+  border-radius: 12rpx;
+}
+/* ==================== 多巴胺风样式 ==================== */
+
+.dopamine-theme {
+  background: #FFF9E6 !important;
+}
+
+.dopamine-theme .header {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 50%, #FF9AA2 100%) !important;
+  animation: gradientShift 8s ease infinite !important;
+  background-size: 200% 200% !important;
+}
+
+.dopamine-theme .title {
+  color: #2D1B4E !important;
+  font-weight: 900 !important;
+  font-size: 48rpx !important;
+}
+
+.dopamine-theme .subtitle {
+  color: #FF9AA2 !important;
+  font-weight: 600 !important;
+}
+
+.dopamine-theme .picker-container {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFEFF5 100%) !important;
+  border: 3rpx dashed #FF6B9D !important;
+  border-radius: 25rpx !important;
+}
+
+.dopamine-theme .picker-text {
+  color: #2D1B4E !important;
+  font-weight: 700 !important;
+}
+
+.dopamine-theme .picker-arrow {
+  animation: bounce 1s ease-in-out infinite !important;
+  color: #FF6B9D !important;
+}
+
+.dopamine-theme .conflict-checkbox-item {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFEFF5 100%) !important;
+  border: 3rpx dashed #FF6B9D !important;
+  border-radius: 25rpx !important;
+}
+
+.dopamine-theme .conflict-checkbox-item.checked {
+  background: linear-gradient(135deg, #FFEFF5 0%, #FFE8CC 100%) !important;
+  border-color: #FFD93D !important;
+}
+
+.dopamine-theme .conflict-checkbox-item checkbox,
+.dopamine-theme .conflict-checkbox-item radio {
+  border-color: #FFB5C5 !important;
+  background-color: #FFF0F3 !important;
+}
+
+.dopamine-theme .conflict-checkbox-item.checked radio[aria-checked="true"] {
+  background-color: #FFD93D !important;
+  border-color: #FFD93D !important;
+}
+
+.dopamine-theme .conflict-name {
+  color: #2D1B4E !important;
+  font-weight: 700 !important;
+}
+
+.dopamine-theme .conflict-brief {
+  color: #666 !important;
+  font-weight: 500 !important;
+}
+
+.dopamine-theme .conflict-detail {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFE8CC 100%) !important;
+  border-left-color: #FFD93D !important;
+}
+
+.dopamine-theme .conflict-label {
+  color: #FF6B9D !important;
+}
+
+.dopamine-theme .conflict-description {
+  color: #2D1B4E !important;
+  font-weight: 600 !important;
+}
+
+.dopamine-theme .checkbox {
+  border-color: #FFB5C5 !important;
+  background-color: #FFF0F3 !important;
+}
+
+.dopamine-theme .checkbox.checked {
+  background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%) !important;
+  border-color: #4D96FF !important;
+}
+
+.dopamine-theme .checkbox.checked text {
+  color: white !important;
+  display: block !important;
+}
+
+.dopamine-theme .section {
+  background: #FFF !important;
+  border: 3rpx dashed #FF6B9D !important;
+  border-radius: 30rpx !important;
+  box-shadow: 6rpx 6rpx 0px rgba(102, 126, 234, 0.15) !important;
+}
+
+.dopamine-theme .section-number {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 100%) !important;
+  color: white !important;
+}
+
+.dopamine-theme .section-title {
+  color: #2D1B4E !important;
+  font-weight: 700 !important;
+}
+
+.dopamine-theme .principle-card {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFEFF5 100%) !important;
+  border: 2rpx solid transparent !important;
+  border-radius: 25rpx !important;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+
+.dopamine-theme .principle-card:active {
+  transform: scale(0.95) rotate(-2deg) !important;
+}
+
+.dopamine-theme .principle-card.selected {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  border-color: #FF9AA2 !important;
+}
+
+.dopamine-theme .principle-id {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  color: white !important;
+  font-weight: 900 !important;
+}
+
+.dopamine-theme .principle-name {
+  color: #2D1B4E !important;
+  font-weight: 700 !important;
+}
+
+.dopamine-theme .principle-tag {
+  border-radius: 25rpx !important;
+  font-weight: 600 !important;
+}
+
+.dopamine-theme .principle-tag.active {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.dopamine-theme .solution-wrapper {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFEFF5 100%) !important;
+  border: 2rpx solid #FFD93D !important;
+  border-radius: 25rpx !important;
+}
+
+.dopamine-theme .generate-btn,
+.dopamine-theme .save-btn {
+  border-radius: 35rpx !important;
+  font-weight: 700 !important;
+  border: 3rpx solid transparent !important;
+}
+
+.dopamine-theme .generate-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  box-shadow: 0 6rpx 20rpx rgba(255, 107, 157, 0.4) !important;
+  animation: pulse 2s ease-in-out infinite !important;
+}
+
+.dopamine-theme .save-btn {
+  background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%) !important;
+  box-shadow: 0 6rpx 20rpx rgba(77, 150, 255, 0.4) !important;
+}
+
+.dopamine-theme .solution-card {
+  background: #FFF !important;
+  border: 3rpx dashed #FF6B9D !important;
+  border-radius: 30rpx !important;
+}
+
+.dopamine-theme .solution-card:active {
+  transform: scale(0.98) !important;
+}
+
+.dopamine-theme .selected-chip,
+.dopamine-theme .principles-chip,
+.dopamine-theme .solution-metas {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.dopamine-theme .chip-remove {
+  background: linear-gradient(135deg, #FFB5C5 0%, #FF9AA2 100%) !important;
+  color: white !important;
+}
+
+.dopamine-theme .status-icon {
+  animation: twinkle 1s ease-in-out infinite !important;
+}
+
+/* 动画 */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8rpx); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1.1); }
+  50% { opacity: 0.5; transform: scale(1); }
+}
+
+.dopamine-theme .tooltip-content {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  box-shadow: 0 8rpx 32rpx rgba(255, 107, 157, 0.3) !important;
+}
+
+.dopamine-theme .expand-toggle {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFEFF5 100%) !important;
+  border: 3rpx dashed #FFD93D !important;
+  border-radius: 40rpx !important;
+}
+
+.dopamine-theme .expand-text {
+  color: #FF6B9D !important;
+  font-weight: 700 !important;
+}
+
+.dopamine-theme .expand-icon {
+  color: #FFD93D !important;
+}
+
+.tooltip-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.tooltip-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30rpx 40rpx;
+  border-radius: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(102, 126, 234, 0.4);
+  max-width: 500rpx;
+  text-align: center;
+  animation: tooltipPop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.tooltip-content::before {
+  content: '';
+  position: absolute;
+  bottom: -20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 20rpx solid transparent;
+  border-top-color: #667eea;
+}
+
+.tooltip-text {
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: white;
+}
+
+.tooltip-wrapper.fade-out {
+  animation: tooltipFadeOut 0.3s ease-out forwards;
+}
+
+@keyframes tooltipPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes tooltipFadeOut {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
+
+.dopamine-theme .tooltip-content {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  box-shadow: 0 8rpx 32rpx rgba(255, 107, 157, 0.3) !important;
+}
+
+.dopamine-theme .tooltip-content::before {
+  border-top-color: #FF6B9D !important;
+}
+
+/* 空状态样式 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 40rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.6;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+  display: block;
+}
+
+.goto-questionnaire-btn {
+  width: 80%;
+  height: 80rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 26rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+  box-shadow: 0 6rpx 20rpx rgba(102, 126, 234, 0.4);
+  
+}
+
+.goto-questionnaire-btn::after {
+  
+}
+
+.goto-questionnaire-btn:active {
+  transform: scale(0.98);
+  opacity: 0.8;
+}
+
+.dopamine-theme .empty-state {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 3rpx dashed #FF6B9D !important;
+  border-radius: 30rpx !important;
+}
+
+.dopamine-theme .empty-title {
+  color: #2D1B4E !important;
+  font-weight: 700 !important;
+}
+
+.dopamine-theme .empty-desc {
+  color: #666 !important;
+  font-weight: 500 !important;
+}
+
+.dopamine-theme .goto-questionnaire-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  border: 3rpx solid #FFF !important;
+  box-shadow: 0 8rpx 25rpx rgba(255, 107, 157, 0.4) !important;
+}

@@ -1,0 +1,30 @@
+{
+  "name": "triz",
+  "version": "1.0.0",
+  "description": "一款帮助用户使用 TRIZ 九宫格法结构化分析问题、识别矛盾并智能推荐创新原理的微信小程序。",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "auto-fix": "node scripts/auto-fix.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luoya-try/Triz-Life-Answer-Book.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/luoya-try/Triz-Life-Answer-Book/issues"
+  },
+  "homepage": "https://github.com/luoya-try/Triz-Life-Answer-Book#readme",
+  "devDependencies": {
+    "miniprogram-ci": "^2.1.26",
+    "pptxgenjs": "^4.0.1"
+  }
+}

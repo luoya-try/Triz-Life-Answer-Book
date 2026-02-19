@@ -1,0 +1,1171 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg-color, #f8f9fa) 0%, #e9ecef 100%);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8rpx;
+  background-color: var(--progress-bg, rgba(102, 126, 234, 0.1));
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--progress-fill-start, #667eea) 0%, var(--progress-fill-end, #764ba2) 100%);
+  transition: width 0.4s ease;
+}
+
+.header {
+  background-color: transparent;
+  padding: 35rpx 30rpx 25rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.progress-text {
+  font-size: 24rpx;
+  color: #6c757d;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  font-weight: 500;
+}
+
+.import-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 10rpx 18rpx;
+  background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+  color: white;
+  font-size: 22rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 3rpx 10rpx rgba(82, 196, 26, 0.3);
+}
+
+.import-btn::after {
+  border: none;
+}
+
+.import-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 8rpx rgba(82, 196, 26, 0.3);
+}
+
+.import-icon {
+  font-size: 24rpx;
+}
+
+.import-text {
+  font-size: 22rpx;
+}
+
+.header-right {
+  display: flex;
+  gap: 10rpx;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 10rpx 16rpx;
+  color: white;
+  font-size: 22rpx;
+  border-radius: 20rpx;
+}
+
+.action-btn::after {
+  border: none;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.import-btn {
+  background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+  box-shadow: 0 3rpx 10rpx rgba(82, 196, 26, 0.3);
+}
+
+.save-grid-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 3rpx 10rpx rgba(102, 126, 234, 0.3);
+}
+
+.content {
+  flex: 1;
+  padding: 20rpx 30rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+/* AI智能提示区域 */
+.hint-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 30rpx rgba(102, 126, 234, 0.3);
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  opacity: 0;
+  transform: translateY(-20rpx);
+  transition: all 0.4s ease;
+}
+
+.hint-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hint-icon {
+  width: 50rpx;
+  height: 50rpx;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: white;
+  flex-shrink: 0;
+}
+
+.hint-icon text:first-child {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hint-content {
+  flex: 1;
+}
+
+.hint-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.hint-title {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: white;
+}
+
+.hint-text {
+  font-size: 24rpx;
+  color: white;
+  line-height: 1.7;
+  font-weight: 400;
+  transition: opacity 0.3s ease;
+}
+
+.hint-text.loading {
+  opacity: 0.7;
+}
+
+.question-card {
+  background-color: white;
+  border-radius: 24rpx;
+  padding: 45rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.08);
+}
+
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.question-badge {
+  width: 60rpx;
+  height: 60rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 24rpx;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(102, 126, 234, 0.3);
+}
+
+.question-tag {
+  font-size: 20rpx;
+  color: #6c757d;
+  background-color: #f8f9fa;
+  padding: 8rpx 18rpx;
+  border-radius: 12rpx;
+  font-weight: 500;
+}
+
+.question-text {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 30rpx;
+  line-height: 1.5;
+  display: block;
+}
+
+.answer-input {
+  width: 100%;
+  min-height: 200rpx;
+  padding: 28rpx;
+  background-color: #f8f9fa;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: #2c3e50;
+  line-height: 1.6;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.char-count {
+  font-size: 20rpx;
+  color: #adb5bd;
+  text-align: right;
+  margin-top: 12rpx;
+  display: block;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 90rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  border-radius: 45rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  transition: all 0.3s ease;
+}
+
+.nav-btn::after {
+  border: none;
+}
+
+.prev-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4rpx 16rpx rgba(102, 126, 234, 0.3);
+}
+
+.prev-btn:active {
+  transform: scale(0.98);
+}
+
+.next-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 6rpx 24rpx rgba(102, 126, 234, 0.4);
+}
+
+.next-btn:active {
+  transform: scale(0.98);
+}
+
+.btn-icon {
+  font-size: 28rpx;
+}
+
+.btn-text {
+  font-size: 26rpx;
+}
+
+/* 查看矛盾按钮（中间）*/
+.view-conflicts-center {
+  display: flex;
+  justify-content: center;
+  margin: 30rpx 0;
+}
+
+.view-conflicts-btn {
+  width: 70%;
+  height: 88rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 28rpx;
+  font-weight: bold;
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6rpx;
+  box-shadow: 0 4rpx 16rpx rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.view-conflicts-btn::after {
+  border: none;
+}
+
+.view-conflicts-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 12rpx rgba(102, 126, 234, 0.3);
+}
+
+.center-btn-icon {
+  font-size: 28rpx;
+}
+
+.center-btn-text {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.center-btn-desc {
+  font-size: 18rpx;
+  opacity: 0.9;
+}
+
+/* 九宫格预览 */
+.nine-grid-preview {
+  margin: 30rpx 30rpx;
+}
+
+.grid-preview-title {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.grid-preview-container {
+  background: white;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.grid-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+
+.grid-row:last-child {
+  margin-bottom: 0;
+}
+
+.grid-cell {
+  flex: 1;
+  height: 90rpx;
+  margin: 5rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border: 2rpx solid #e9ecef;
+  position: relative;
+}
+
+.grid-cell:active {
+  transform: scale(0.95);
+}
+
+.grid-cell-label {
+  font-size: 18rpx;
+  text-align: center;
+  color: #6c757d;
+  line-height: 1.3;
+  padding: 0 5rpx;
+}
+
+.grid-cell-status {
+  position: absolute;
+  top: 5rpx;
+  right: 5rpx;
+  font-size: 24rpx;
+  color: #52c41a;
+  font-weight: bold;
+}
+
+/* 已填写的格子 */
+.grid-cell.filled {
+  background: #e6f7ff;
+  border-color: #1890ff;
+}
+
+.grid-cell.filled .grid-cell-label {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+/* 核心问题格子 - 特殊样式 */
+.center-cell {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+}
+
+.center-cell .grid-cell-label {
+  color: white;
+  font-weight: 700;
+  font-size: 20rpx;
+}
+
+.center-cell .grid-cell-status {
+  color: #FFD700;
+}
+
+/* 核心问题已填写 */
+.center-cell.center-filled {
+  background: linear-gradient(135deg, #5a67d8 0%, #805ad5 100%);
+  box-shadow: 0 4rpx 12rpx rgba(102, 126, 234, 0.4);
+}
+
+/* 当前激活的格子 */
+.grid-cell.active {
+  border-color: #ff6b9d;
+  box-shadow: 0 0 0 3rpx rgba(255, 107, 157, 0.3);
+}
+
+.question-timeline {
+  background-color: white;
+  border-radius: 24rpx;
+  padding: 35rpx;
+  box-shadow: 0 6rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+.timeline-title {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 25rpx;
+  display: block;
+}
+
+.timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15rpx;
+}
+
+.timeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22rpx 12rpx;
+  background-color: #f8f9fa;
+  border-radius: 16rpx;
+  transition: all 0.3s ease;
+  gap: 12rpx;
+  border: 2rpx solid transparent;
+}
+
+.timeline-item:active {
+  transform: scale(0.95);
+}
+
+.timeline-item.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.timeline-item.active .timeline-dot {
+  background-color: white;
+}
+
+.timeline-item.active .dot-number,
+.timeline-item.active .dot-check {
+  color: #667eea;
+}
+
+.timeline-item.answered {
+  border-color: #52c41a;
+  background-color: #f6ffed;
+}
+
+.timeline-item.answered .timeline-dot {
+  background-color: #52c41a;
+}
+
+.timeline-item.answered .dot-check {
+  color: white;
+}
+
+.timeline-dot {
+  width: 48rpx;
+  height: 48rpx;
+  background-color: #adb5bd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.dot-number,
+.dot-check {
+  font-size: 22rpx;
+  font-weight: bold;
+  color: white;
+}
+
+.timeline-label {
+  font-size: 18rpx;
+  color: #6c757d;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
+.timeline-item.active .timeline-label {
+  color: white;
+}
+
+.save-section {
+  margin-top: 30rpx;
+}
+
+.save-btn {
+  width: 100%;
+  height: 80rpx;
+  background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+  color: white;
+  font-size: 28rpx;
+  font-weight: bold;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15rpx;
+  box-shadow: 0 6rpx 20rpx rgba(82, 196, 26, 0.4);
+}
+
+.save-btn::after {
+  border: none;
+}
+
+.save-btn:active {
+  transform: scale(0.98);
+}
+
+.save-icon {
+  font-size: 32rpx;
+}
+
+.save-text {
+  font-size: 28rpx;
+}
+
+
+
+/* ==================== 多巴胺风样式 ==================== */
+
+.dopamine-theme {
+  background: #FFF9E6 !important;
+}
+
+.dopamine-theme .container {
+  background: #FFF9E6 !important;
+}
+
+.dopamine-theme .progress-bar {
+  background: linear-gradient(90deg, #FF6B9D 0%, #FFD93D 50%, #FF9AA2 100%) !important;
+}
+
+.dopamine-theme .progress-fill {
+  background: linear-gradient(90deg, #FFD93D 0%, #FF6B9D 100%) !important;
+  animation: progressPulse 2s ease-in-out infinite !important;
+}
+
+.dopamine-theme .title {
+  color: #2D1B4E !important;
+  font-weight: 900 !important;
+}
+
+.dopamine-theme .progress-text {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 100%) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  border: none !important;
+}
+
+.dopamine-theme .import-btn {
+  background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%) !important;
+  border: 3rpx solid #FFF !important;
+  box-shadow: 0 4rpx 15rpx rgba(77, 150, 255, 0.4) !important;
+  animation: iconPulse 3s ease-in-out infinite !important;
+}
+
+.dopamine-theme .import-btn:active {
+  transform: scale(0.95) !important;
+}
+
+.dopamine-theme .hint-section {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  border-radius: 30rpx !important;
+  border: 4rpx solid #FFF !important;
+  box-shadow: 0 8rpx 30rpx rgba(255, 107, 157, 0.4) !important;
+}
+
+.dopamine-theme .hint-icon {
+  animation: twinkle 2s ease-in-out infinite !important;
+}
+
+.dopamine-theme .hint-title {
+  color: #FFF !important;
+  font-weight: 900 !important;
+  font-size: 28rpx !important;
+}
+
+.dopamine-theme .question-card {
+  background: #FFF !important;
+  border: 3rpx dashed #FF6B9D !important;
+  border-radius: 30rpx !important;
+  box-shadow: 8rpx 8rpx 0px rgba(102, 126, 234, 0.15) !important;
+}
+
+.dopamine-theme .question-header {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 100%) !important;
+  border-radius: 25rpx 25rpx 0 0 !important;
+}
+
+.dopamine-theme .question-badge {
+  background: #FFF !important;
+  color: #FF6B9D !important;
+  font-weight: 900 !important;
+}
+
+.dopamine-theme .question-tag {
+  color: white !important;
+  font-weight: 700 !important;
+}
+
+.dopamine-theme .question-text {
+  color: #2D1B4E !important;
+  font-weight: 700 !important;
+  font-size: 32rpx !important;
+}
+
+.dopamine-theme .answer-input {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFEFF5 100%) !important;
+  border: 2rpx solid #FFD93D !important;
+  border-radius: 20rpx !important;
+}
+
+.dopamine-theme .nav-btn {
+  border-radius: 40rpx !important;
+  border: 3rpx solid transparent !important;
+  font-weight: 700 !important;
+}
+
+.dopamine-theme .prev-btn {
+  background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%) !important;
+  box-shadow: 0 4rpx 15rpx rgba(77, 150, 255, 0.4) !important;
+}
+
+.dopamine-theme .next-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  box-shadow: 0 4rpx 15rpx rgba(255, 107, 157, 0.4) !important;
+  animation: pulse 2s ease-in-out infinite !important;
+}
+
+.dopamine-theme .timeline-item {
+  border-radius: 25rpx !important;
+}
+
+.dopamine-theme .timeline-dot {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 100%) !important;
+  box-shadow: 0 3rpx 12rpx rgba(255, 215, 61, 0.4) !important;
+}
+
+.dopamine-theme .timeline-item.active .timeline-dot {
+  animation: twinkle 1s ease-in-out infinite !important;
+}
+
+.dopamine-theme .save-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  border: 4rpx solid #FFF !important;
+  border-radius: 40rpx !important;
+  box-shadow: 0 6rpx 20rpx rgba(255, 107, 157, 0.4) !important;
+  animation: bounce 1s ease-in-out infinite !important;
+}
+
+/* 多巴胺风动画 */
+@keyframes progressPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10rpx); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* 多巴胺风 - 中间按钮样式 */
+.dopamine-theme .view-conflicts-btn {
+  background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%) !important;
+  border: 4rpx solid #FFF !important;
+  animation: pulse 2s ease-in-out infinite !important;
+}
+
+/* ==================== 智能分析区域 ==================== */
+
+.auto-analysis-section {
+  padding: 15rpx 30rpx;
+  margin-bottom: 10rpx;
+}
+
+.auto-analysis-btn {
+  width: 100%;
+  height: 110rpx;
+  background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%);
+  color: white;
+  border-radius: 25rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(77, 150, 255, 0.35);
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.auto-analysis-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 12rpx rgba(77, 150, 255, 0.35);
+}
+
+.btn-main {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-bottom: 4rpx;
+}
+
+.btn-icon {
+  font-size: 36rpx;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+.btn-title {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.btn-desc {
+  font-size: 20rpx;
+  opacity: 0.9;
+}
+
+/* 自动填充完成横幅 */
+.auto-fill-banner {
+  padding: 15rpx 30rpx;
+  background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+  border-radius: 25rpx;
+  margin: 10rpx 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4rpx 16rpx rgba(82, 196, 26, 0.3);
+  animation: slideDown 0.5s ease-out;
+}
+
+.banner-icon {
+  font-size: 28rpx;
+}
+
+.banner-text {
+  flex: 1;
+  font-size: 22rpx;
+  color: white;
+  font-weight: 600;
+  margin-left: 12rpx;
+}
+
+.banner-more {
+  font-size: 20rpx;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* AI填充标识 */
+.ai-tag {
+  display: inline-block;
+  font-size: 18rpx;
+  color: #4D96FF;
+  background: rgba(77, 150, 255, 0.1);
+  padding: 2rpx 8rpx;
+  border-radius: 8rpx;
+  margin-left: 8rpx;
+  font-weight: 600;
+}
+
+/* ==================== 多巴胺风 - 智能分析样式 ==================== */
+
+.dopamine-theme .auto-analysis-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  border: 4rpx dashed #FFF !important;
+  box-shadow: 0 6rpx 25rpx rgba(255, 107, 157, 0.4) !important;
+}
+
+.dopamine-theme .btn-icon {
+  animation: twinkle 1.5s ease-in-out infinite !important;
+}
+
+.dopamine-theme .auto-fill-banner {
+  background: linear-gradient(135deg, #6BCB77 0%, #FFD93D 100%) !important;
+  border: 3rpx dashed #FFD93D !important;
+}
+
+/* 多巴胺风 - 九宫格预览 */
+.dopamine-theme .grid-preview-container {
+  background: #FFEFF5 !important;
+  border: 4rpx dashed #FF6B9D !important;
+  box-shadow: 8rpx 8rpx 0px rgba(102, 126, 234, 0.15) !important;
+}
+
+.dopamine-theme .grid-preview-title {
+  color: #2D1B4E !important;
+  font-weight: 900 !important;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%);
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.dopamine-theme .grid-cell {
+  background: #FFF !important;
+  border: 3rpx dashed #FFD93D !important;
+}
+
+.dopamine-theme .grid-cell.filled {
+  background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%) !important;
+  border: 2rpx solid #FFF !important;
+}
+
+.dopamine-theme .grid-cell.filled .grid-cell-label {
+  color: white !important;
+}
+
+.dopamine-theme .center-cell {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%) !important;
+  border: 4rpx solid #FFD93D !important;
+  animation: pulse 2s ease-in-out infinite !important;
+  box-shadow: 0 6rpx 20rpx rgba(255, 107, 157, 0.5) !important;
+}
+
+.dopamine-theme .center-cell.center-filled {
+  background: linear-gradient(135deg, #FF9AA2 0%, #FFB5C5 100%) !important;
+  box-shadow: 0 8rpx 25rpx rgba(255, 107, 157, 0.6) !important;
+}
+
+.dopamine-theme .grid-cell.active {
+  border-color: #FFD93D !important;
+  box-shadow: 0 0 0 4rpx rgba(255, 215, 61, 0.5) !important;
+}
+
+/* 修复active样式的多余括号 */
+.grid-cell.filled.active {
+  background: #bae7ff !important;
+}
+
+/* ==================== 生活版样式与动画 ==================== */
+
+/* 生活版按钮动画 */
+.theme-lifestyle button:active {
+  animation: scaleClick 0.2s ease-out;
+}
+
+/* 生活版弹跳图标 */
+.theme-lifestyle .bounce {
+  animation: bounce 0.6s ease-in-out;
+}
+
+/* 生活版脉冲图标 */
+.theme-lifestyle .pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* 生活版旋转图标 */
+.theme-lifestyle .rotate {
+  animation: spin 1s linear infinite;
+}
+
+/* 生活版卡片样式 */
+.theme-lifestyle .hint-section {
+  background: linear-gradient(135deg, var(--accent-color, #ff6f91) 0%, var(--primary-color, #e67e22) 100%);
+}
+
+.theme-lifestyle .question-card {
+  background-color: var(--card-bg, #ffffff);
+  border-radius: var(--border-radius, 24rpx);
+  box-shadow: var(--shadow, 0 4rpx 16rpx rgba(230,126,34,0.15));
+}
+
+.theme-lifestyle .auto-fill-banner {
+  background-color: var(--banner-bg, rgba(230, 126, 34, 0.08));
+  border: 2rpx solid var(--banner-border, rgba(230, 126, 34, 0.2));
+  border-radius: var(--border-radius, 20rpx);
+}
+
+.theme-lifestyle .import-btn {
+  background: linear-gradient(135deg, var(--success-color, #6ab04c) 0%, #5da040 100%);
+  box-shadow: 0 3rpx 10rpx rgba(106, 176, 76, 0.3);
+}
+
+.theme-lifestyle .save-grid-btn {
+  background: linear-gradient(135deg, var(--accent-color, #ff6f91) 0%, var(--primary-color, #e67e22) 100%);
+  box-shadow: 0 3rpx 10rpx rgba(230, 126, 34, 0.3);
+}
+
+.theme-lifestyle .question-badge {
+  background-color: var(--accent-color, #ff6f91);
+}
+
+.theme-lifestyle .question-tag {
+  background-color: var(--primary-light, #f39c12);
+  color: white;
+}
+
+.theme-lifestyle .ai-tag {
+  background-color: var(--success-color, #6ab04c);
+}
+
+/* ==================== 场景一：AI自动填写内嵌输入区域 ==================== */
+.ai-input-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f8f9fa;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-input-section {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  margin: 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.08);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-input-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.ai-input-subtitle {
+  font-size: 26rpx;
+  color: #6c757d;
+  display: block;
+  margin-bottom: 30rpx;
+  line-height: 1.6;
+}
+
+.ai-input-area {
+  width: 100%;
+  flex: 1;
+  min-height: 350rpx;
+  background-color: #f8f9fa;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  font-size: 28rpx;
+  color: #2c3e50;
+  line-height: 1.6;
+  border: 2rpx solid #e9ecef;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.ai-input-area:focus {
+  border-color: #667eea;
+  outline: none;
+}
+
+.ai-input-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20rpx;
+}
+
+.ai-input-count {
+  font-size: 22rpx;
+  color: #adb5bd;
+}
+
+.ai-submit-btn {
+  width: auto;
+  min-width: 200rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 28rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+  border: none;
+  box-shadow: 0 4rpx 16rpx rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.ai-submit-btn::after {
+  border: none;
+}
+
+.ai-submit-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 8rpx rgba(102, 126, 234, 0.3);
+}
+
+/* ==================== 场景二：AI提示作为标题 ==================== */
+.question-title-section {
+  padding: 30rpx 20rpx 20rpx;
+  margin: 0;
+}
+
+.question-title {
+  font-size: 30rpx;
+  color: #667eea;
+  font-weight: 500;
+  line-height: 1.5;
+  display: block;
+}
+
+/* ==================== AI帮你填按钮 ==================== */
+.ai-fill-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.ai-fill-btn {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 20rpx 40rpx;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(245, 87, 108, 0.3);
+}
+
+.ai-fill-icon {
+  font-size: 32rpx;
+}
+
+.ai-fill-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: white;
+}
+
+.ai-fill-desc {
+  font-size: 22rpx;
+  color: #adb5bd;
+  margin-top: 12rpx;
+}
+
+/* ==================== 生活版主题扩展 ==================== */
+.theme-lifestyle .ai-input-section {
+  background-color: var(--card-bg, #ffffff);
+  box-shadow: var(--shadow, 0 4rpx 16rpx rgba(230, 126, 34, 0.15));
+}
+
+.theme-lifestyle .ai-input-title {
+  color: var(--text-primary, #2d1b4e);
+}
+
+.theme-lifestyle .ai-input-subtitle {
+  color: var(--text-secondary, #666);
+}
+
+.theme-lifestyle .ai-input-area {
+  background-color: #FFF9E6;
+  border-color: rgba(255, 215, 61, 0.3);
+}
+
+.theme-lifestyle .ai-submit-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%);
+  box-shadow: 0 4rpx 20rpx rgba(255, 107, 157, 0.3);
+}
+
+.theme-lifestyle .ai-fill-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFD93D 100%);
+  box-shadow: 0 4rpx 20rpx rgba(255, 107, 157, 0.3);
+}
+
+.theme-lifestyle .question-title {
+  color: var(--accent-color, #ff6f91);
+  font-weight: 600;
+}
+

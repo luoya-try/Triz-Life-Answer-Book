@@ -1,0 +1,253 @@
+<view class="container {{themeClass}}">
+  <view class="header">
+    <view class="header-left">
+      <text class="title">{{pageTitle}}</text>
+      <text class="subtitle" wx:if="{{apiStatus}}">{{apiStatus}}</text>
+    </view>
+  </view>
+  
+   <view class="content">
+     <!-- 开放引导 (仅生活版) -->
+    <view class="opening-guide" wx:if="{{openGuide}}">
+      <text class="guide-text">{{openGuide}}</text>
+    </view>
+    <!-- 矛盾对选择 -->
+    <view class="section" wx:if="{{conflictOptions.length > 0}}">
+      <view class="section-header">
+        <text class="section-number">01</text>
+        <text class="section-title">{{version === 'lifestyle' ? '选择困境' : '选择矛盾对'}}</text>
+      </view>
+      <radio-group bindchange="onConflictCheckboxChange">
+        <view class="conflict-checkbox-list">
+          <label
+            wx:for="{{conflictOptions}}"
+            wx:key="id"
+            class="conflict-checkbox-item {{isConflictSelected(item.id) ? 'checked' : ''}}"
+          >
+            <radio value="{{item.id}}" checked="{{isConflictSelected(item.id)}}"/>
+            <view class="conflict-checkbox-content">
+              <text class="conflict-name">{{item.name}}</text>
+              <text class="conflict-brief" wx:if="{{item.innerDrama || item.description}}">{{item.innerDrama || (item.description ? item.description.substring(0, 50) : '')}}...</text>
+            </view>
+          </label>
+        </view>
+      </radio-group>
+
+      <view class="conflict-detail" wx:if="{{selectedConflict}}">
+        <text class="conflict-label">{{version === 'lifestyle' ? '困境描述：' : '矛盾对描述：'}}</text>
+        <text class="conflict-description">{{selectedConflict.innerDrama || selectedConflict.description}}</text>
+      </view>
+    </view>
+
+    <!-- 空状态提示 -->
+    <view class="section empty-state" wx:if="{{conflictOptions.length === 0}}">
+      <view class="empty-icon">📝</view>
+      <text class="empty-title">暂无矛盾数据</text>
+      <text class="empty-desc">请先完成问卷、九宫格编辑和矛盾提取流程</text>
+      <button class="goto-questionnaire-btn" bindtap="gotoQuestionnaire">去完成问卷</button>
+    </view>
+
+    <!-- Triz原理推荐 -->
+    <view class="section recommend-section" wx:if="{{selectedConflict}}">
+      <view class="section-header">
+        <text class="section-number">02</text>
+        <text class="recommend-badge">AI推荐</text>
+        <text class="section-title">智能推荐原理</text>
+      </view>
+      <view class="recommended-principles">
+        <view
+          wx:for="{{recommendedPrinciples}}"
+          wx:key="id"
+          class="principle-card recommended {{isPrincipleSelected(item.id) ? 'selected' : ''}}"
+          bindtap="selectPrincipleAndShowTooltip"
+          data-id="{{item.id}}"
+        >
+          <view class="principle-header">
+            <view class="principle-id">{{item.id}}</view>
+            <view class="checkbox {{isPrincipleSelected(item.id) ? 'checked' : ''}}">
+              <text wx:if="{{isPrincipleSelected(item.id)}}">✓</text>
+            </view>
+          </view>
+          <text class="principle-name">{{item.name}}</text>
+          <text class="principle-desc">{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 40个Triz原理选择 -->
+    <view class="section principles-section">
+      <view class="section-header">
+        <text class="section-number">03</text>
+        <text class="section-title">{{version === 'lifestyle' ? '选择透镜' : 'TRIZ原理选择'}}</text>
+      </view>
+
+      <view class="principles-grid">
+        <view
+          wx:for="{{displayedPrinciples}}"
+          wx:key="id"
+          class="principle-card small {{isPrincipleSelected(item.id) ? 'selected' : ''}}"
+          bindtap="selectPrincipleAndShowTooltip"
+          data-id="{{item.id}}"
+        >
+          <view class="principle-header">
+            <view class="principle-id">{{item.id}}</view>
+            <view class="checkbox {{isPrincipleSelected(item.id) ? 'checked' : ''}}">
+              <text wx:if="{{isPrincipleSelected(item.id)}}">✓</text>
+            </view>
+          </view>
+          <text class="principle-name">{{item.name}}</text>
+        </view>
+      </view>
+
+      <view
+        wx:if="{{remainingPrinciples.length > 0}}"
+        class="expand-toggle"
+        bindtap="togglePrinciplesExpand"
+      >
+        <text class="expand-text">
+          {{principlesExpanded ? '收起' : '展开全部 (+' + remainingPrinciples.length + ')'}}
+        </text>
+        <text class="expand-icon">{{principlesExpanded ? '▲' : '▼'}}</text>
+      </view>
+    </view>
+
+    <view
+      wx:if="{{showTooltip}}"
+      class="tooltip-wrapper {{tooltipFadeOut ? 'fade-out' : ''}}"
+    >
+      <view class="tooltip-content">
+        <text class="tooltip-text">{{tooltipText}}</text>
+      </view>
+    </view>
+    
+    <!-- 生成解决方案 -->
+    <view class="section solution-section" wx:if="{{selectedConflict && selectedPrinciples.length > 0}}">
+      <view class="section-header">
+        <text class="section-number">04</text>
+        <text class="section-title">{{config.solution.generateAction || '生成解决方案'}}</text>
+      </view>
+      
+      <view class="selected-principles">
+        <text class="selected-label">已选原理：</text>
+      <view class="selected-chips">
+        <view
+          wx:for="{{selectedPrincipleWithNames}}"
+          wx:key="id"
+          class="selected-chip"
+          catchtap="removeSelectedPrinciple"
+          data-id="{{item.id}}"
+        >
+          <text class="chip-id">{{item.id}}</text>
+          <text class="chip-name">{{item.name}}</text>
+          <text class="chip-remove">×</text>
+        </view>
+      </view>
+
+      <view class="solution-wrapper">
+        <scroll-view class="solution-scroll" scroll-y="{{true}}">
+          <text class="solution-display">{{solution || '基于选择的原理，AI将为您生成解决方案草案...'}}</text>
+        </scroll-view>
+
+        <view class="generating-status" wx:if="{{isGenerating}}">
+          <text class="status-icon">⟳</text>
+          <text class="status-text">AI正在生成解决方案...</text>
+        </view>
+      </view>
+
+        <view class="solution-buttons">
+          <button class="generate-btn" bindtap="generateSolution" hover-class="btn-hover">
+            <text class="btn-icon">✦</text>
+            <text class="btn-text">{{config.buttons.generate || '自动生成'}}</text>
+          </button>
+          <button class="save-btn" bindtap="openSaveModal" hover-class="btn-hover">
+            <text class="btn-icon">★</text>
+            <text class="btn-text">{{config.buttons.save || '保存方案'}}</text>
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 保存编辑弹窗 -->
+    <view class="edit-modal" wx:if="{{showSaveModal}}" catchtap="">
+      <view class="edit-modal-mask" bindtap="closeSaveModal"></view>
+      <view class="edit-modal-content">
+        <view class="edit-modal-header">
+          <text class="edit-modal-title">编辑并保存解决方案</text>
+          <text class="edit-modal-close" bindtap="closeSaveModal">✕</text>
+        </view>
+
+        <view class="edit-modal-body">
+          <view class="edit-info-section">
+            <text class="edit-info-title">矛盾信息</text>
+            <text class="edit-info-text">{{selectedConflict.cell1Name}} vs {{selectedConflict.cell2Name}}</text>
+          </view>
+
+          <view class="edit-info-section">
+            <text class="edit-info-title">应用原理</text>
+            <view class="edit-principles">
+              <text class="edit-chip" wx:for="{{selectedPrincipleWithNames}}" wx:key="id">{{item.name}}</text>
+            </view>
+          </view>
+
+          <textarea
+            class="edit-textarea"
+            value="{{tempSolution}}"
+            bindinput="onEditInput"
+            placeholder="请编辑解决方案..."
+            maxlength="2000"
+            adjust-position="{{true}}"
+            show-confirm-bar="{{false}}"
+          ></textarea>
+
+          <view class="edit-footer-info">
+            <text class="char-count">{{tempSolution.length}} / 2000 字</text>
+          </view>
+        </view>
+
+        <view class="edit-modal-footer">
+          <button class="edit-cancel-btn" bindtap="closeSaveModal">取消</button>
+          <button class="edit-confirm-btn" bindtap="confirmSave">确认保存</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 已保存的解决方案 -->
+    <view class="section saved-section" wx:if="{{solutions.length > 0}}">
+      <view class="section-header">
+        <text class="section-number">05</text>
+        <text class="section-title">{{config.emptyResult ? '已保存的方案' : '已保存的方案'}}</text>
+        <text class="solution-count">{{solutions.length}}</text>
+      </view>
+      <view class="solutions-list">
+        <view 
+          wx:for="{{solutions}}" 
+          wx:key="index" 
+          class="solution-card {{viewIndex === index ? 'expanded' : ''}}"
+          bindtap="toggleSolution"
+          data-index="{{index}}"
+        >
+          <view class="solution-card-header">
+            <view class="solution-info">
+              <text class="solution-conflict">{{item.conflict}}</text>
+              <text class="solution-meta">{{item.time}}</text>
+            </view>
+            <view class="solution-actions">
+              <button class="action-btn" catchtap="deleteSolution" data-index="{{index}}" hover-class="action-hover">删除</button>
+            </view>
+          </view>
+          <view class="solution-card-body" wx:if="{{viewIndex === index}}">
+            <view class="solution-principles">
+              <text class="principles-label">应用原理：</text>
+              <view class="principles-chips">
+                <view wx:for="{{item.principles}}" wx:key="*this" wx:for-item="principle" class="principle-chip">
+                  {{principle}}
+                </view>
+              </view>
+            </view>
+            <text class="solution-content">{{item.content}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
